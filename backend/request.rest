@@ -1,0 +1,214 @@
+//Get all users
+GET http://localhost:5000/users
+
+//Get one user
+###
+GET http://localhost:5000/users/1e336adc-7a5d-468f-9b89-a4bd619b47c1
+
+//Register User
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "firstName": "john",
+    "lastName": "doe",
+    "email": "johndoe@gmail.com",
+    "password": "johndoe",
+    "confPassword": "johndoe",
+    "role": "learner"
+}
+
+//Update user
+###
+PATCH  http://localhost:5000/users/5141aff5-7951-4925-884e-b9dab21e92d3
+Content-Type: application/json
+
+{
+    "email": "uveclee@gmail.",
+    "password": "",
+    "confPassword": ""
+}
+
+//Delete user
+###
+DELETE http://localhost:5000/users/c88def44-1c2e-490c-8b4b-2da349db1420
+
+//Login
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "uveclee@gmail.com",
+    "password": "uveclee"
+}
+
+//Auth
+###
+GET http://localhost:5000/login
+
+
+//Logout
+###
+DELETE http://localhost:5000/logout
+
+
+
+//////////Thread///////////
+###
+GET http://localhost:5000/threads
+
+###
+GET http://localhost:5000/threads/39862e58-b783-458d-a159-1c9be752df49
+
+###
+GET http://localhost:5000/tags/reactjs
+
+###
+GET http://localhost:5000/user-threads/
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Thread tentang Web Development",
+    "content": "Apakah untuk memulai menjadi sebagai seorang web developer harus dimulai dari fullstack, lalu setelah itu memutuskan ingin melanjutkan untuk memperdalam di frontend atau backend?",
+    "tags": ["Reactjs", "web development", "frontend"]
+}
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Tentang cara menjaga status otentikasi",
+    "content": "Bagaimana cara untuk menjaga status agar tetap authenticated meski pages di-refresh?",
+    "tags": ["Reactjs", "web development", "frontend", "authentication", "state"]
+}
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Thread tentang ReactJs",
+    "content": "Bagaimana caranya call API pada ReactJS dilakukan?",
+    "tags": ["Reactjs", "web development", "frontend"]
+}
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Thread punya admin 1",
+    "content": "tes thread admin 1"
+}
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Thread tentang API Call",
+    "content": "Bagaimana caranya memanggil API menggunakan ReactJS?",
+    "tags": ["Reactjs", "web development", "frontend", "API", "get"]
+}
+
+###
+POST http://localhost:5000/threads
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Node.Js",
+    "content": "Siapa yang dapat melakukan setting pada backend menggunakan Node.js? library apa saja yang diugnakan?",
+    "tags": ["nodejs", "web development", "backend", "js"]
+}
+
+###
+PATCH http://localhost:5000/threads/39862e58-b783-458d-a159-1c9be752df49
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Thread tentang menjadi seorang Web Developer",
+    "content": "Apakah untuk memulai menjadi sebagai seorang web developer harus dimulai dari fullstack, lalu setelah itu memutuskan ingin melanjutkan untuk memperdalam di frontend atau backend?",
+    "tags": ["backend", "fullstack", "web development", "frontend"],
+    "solved": true 
+}
+
+###
+PATCH http://localhost:5000/threads/c61b852a-439e-4628-806d-b19c5f8798b8
+Content-Type: application/json
+
+{
+    "userId": "",
+    "title": "Menambahkan fitur scoring",
+    "content": "Bagaimana caranya menambahkan fitur thumbs scoring untuk suatu thread? Aku sempat memulai menambahkan fitur ini tetapi sulit untuk mengimplementasikannya. Aku berpikir untuk memberikan saja tombol counter sesuai berapa kali thread/reply tersebut disukai, tetapi cara ini memungkinkan bug/eksploitasi untuk spam like pada 1 thread yang dilakukan 1 user",
+    "tags": ["fitur scoring", "web development", "frontend", "helpful"]
+}
+
+###
+DELETE http://localhost:5000/threads/576a1775-02b8-4a59-a508-d200e317607e
+
+
+////////Reply/////////
+
+###
+GET http://localhost:5000/replies
+
+
+###
+GET http://localhost:5000/replies/6
+
+
+###
+POST http://localhost:5000/replies
+Content-Type: application/json
+
+{
+    "userId": "",
+    "threadId": "9",
+    "reply": "Saya menggunakan library sequelize, express, dotenv, argon2, cors"
+}
+
+###
+POST http://localhost:5000/replies
+Content-Type: application/json
+
+{
+    "userId": "",
+    "threadId": "2",
+    "reply": "Tentu, akan lebih mudah begitu karena kamu akan tahu hubungan antara jobdesc sehingga dapat memahami alurnya"
+}
+
+###
+POST http://localhost:5000/replies
+Content-Type: application/json
+
+{
+    "userId": "",
+    "threadId": "3",
+    "reply": "Gunakan Axios"
+}
+
+###
+PATCH http://localhost:5000/replies/011c3a82-ee2f-47f8-b750-a75c2a3a8a96
+Content-Type: application/json
+
+{
+    "userId": "",
+    "threadId": "6",
+    "reply": "tes change 6"
+}
+
+###
+DELETE http://localhost:5000/replies/011c3a82-ee2f-47f8-b750-a75c2a3a8a96
