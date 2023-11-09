@@ -21,18 +21,18 @@ Content-Type: application/json
 
 //Update user
 ###
-PATCH  http://localhost:5000/users/5141aff5-7951-4925-884e-b9dab21e92d3
+PATCH  http://localhost:5000/users/e4e8eff7-49f6-45f9-a05e-79493772fe0b
 Content-Type: application/json
 
 {
-    "email": "uveclee@gmail.",
-    "password": "",
-    "confPassword": ""
+    "email": "uveclee@gmail.com",
+    "password": "uveclee",
+    "confPassword": "uveclee"
 }
 
 //Delete user
 ###
-DELETE http://localhost:5000/users/c88def44-1c2e-490c-8b4b-2da349db1420
+DELETE http://localhost:5000/users/f23260cd-7b7c-4f39-b9fe-a67af78b6755
 
 //Login
 ###
