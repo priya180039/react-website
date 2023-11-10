@@ -10,9 +10,7 @@ export const SignProvider = ({ children }) => {
   const signUp = () => {
     setSignType("register");
   };
-  useEffect(() => {
-    console.log(signType);
-  }, [signType]);
+  useEffect(() => {}, [signType]);
   return (
     <SignContext.Provider value={{ signType, signIn, signUp }}>
       {children}

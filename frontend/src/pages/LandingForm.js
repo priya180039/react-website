@@ -6,7 +6,6 @@ import { useSign } from "../features/SignContext";
 
 const LandingForm = () => {
   const { signType } = useSign();
-  console.log(localStorage.getItem("isAuth") === "true");
   return (
     <>
       {localStorage.getItem("isAuth") === "true" ? (

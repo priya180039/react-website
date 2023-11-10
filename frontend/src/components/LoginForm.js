@@ -11,7 +11,9 @@ const LoginForm = () => {
   const [errPassword, setErrPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+  const { isSuccess, isError, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
   const { signUp } = useSign();
 
   useEffect(() => {
@@ -103,13 +105,24 @@ const LoginForm = () => {
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <button
-            id="submit"
-            type="submit"
-            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-[30px] rounded-md"
-          >
-            Login
-          </button>
+          {isLoading ? (
+            <button
+              disabled
+              id="submit"
+              type="submit"
+              className="w-full transform transition-all duration-300 ease-in-out bg-gray-200 text-zinc-950/90 border-2 border-transparent mix-blend-hard-light py-2 mt-[30px] rounded-md"
+            >
+              Loading...
+            </button>
+          ) : (
+            <button
+              id="submit"
+              type="submit"
+              className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-[30px] rounded-md"
+            >
+              Login
+            </button>
+          )}
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex text-gray-300 transform transition-all duration-200 ease-in-out">
           <p className="mr-2">Don't have an account yet?</p>

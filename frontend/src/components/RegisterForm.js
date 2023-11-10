@@ -82,7 +82,7 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <div className="w-full inline-block">
-            <label htmlFor="firstname" className="mix-blend-hard-light">
+            <label htmlFor="registfirstname" className="mix-blend-hard-light">
               Firstname
             </label>
             <span
@@ -94,7 +94,7 @@ const RegisterForm = () => {
             </span>
           </div>
           <input
-            id="firstname"
+            id="registfirstname"
             onChange={(e) => {
               setInputFirst(e.target.value);
             }}
@@ -104,7 +104,7 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <div className="w-full inline-block">
-            <label htmlFor="lastname" className="mix-blend-hard-light">
+            <label htmlFor="registlastname" className="mix-blend-hard-light">
               Lastname
             </label>
             <span
@@ -116,7 +116,7 @@ const RegisterForm = () => {
             </span>
           </div>
           <input
-            id="lastname"
+            id="registlastname"
             onChange={(e) => {
               setInputLast(e.target.value);
             }}
@@ -126,7 +126,7 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <div className="w-full inline-block">
-            <label htmlFor="email" className="mix-blend-hard-light">
+            <label htmlFor="registemail" className="mix-blend-hard-light">
               Email
             </label>
             <span
@@ -138,7 +138,7 @@ const RegisterForm = () => {
             </span>
           </div>
           <input
-            id="email"
+            id="registemail"
             onChange={(e) => {
               setInputEmail(e.target.value);
             }}
@@ -148,7 +148,7 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <div className="w-full inline-block">
-            <label htmlFor="password" className="mix-blend-hard-light">
+            <label htmlFor="registpassword" className="mix-blend-hard-light">
               Password
             </label>
             <span
@@ -160,7 +160,7 @@ const RegisterForm = () => {
             </span>
           </div>
           <input
-            id="password"
+            id="registpassword"
             type="password"
             onChange={(e) => {
               setInputPassword(e.target.value);
@@ -172,7 +172,10 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <div className="w-full inline-block">
-            <label htmlFor="confpassword" className="mix-blend-hard-light">
+            <label
+              htmlFor="registconfpassword"
+              className="mix-blend-hard-light"
+            >
               Confirm Password
             </label>
             <span
@@ -184,7 +187,7 @@ const RegisterForm = () => {
             </span>
           </div>
           <input
-            id="confpassword"
+            id="registconfpassword"
             type="password"
             onChange={(e) => {
               setInputConfirmPassword(e.target.value);
@@ -196,11 +199,11 @@ const RegisterForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <button
-            id="submit"
+            id="register"
             type="submit"
             className="w-full bg-green-500 text-gray-200 mix-blend-hard-light py-2 mt-3 rounded-md"
           >
-            Login
+            Register
           </button>
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex">
