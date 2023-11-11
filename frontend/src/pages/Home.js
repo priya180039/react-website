@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Sidebar from "../components/Sidebar";
@@ -7,8 +7,9 @@ import { Navigate } from "react-router-dom";
 import { useHeader } from "../features/HeaderContext";
 
 const Home = () => {
-  const { sideToggle } = useHeader();
   const [pageScroll, setPageScroll] = useState(false);
+  const { sideToggle, setSideToggle } = useHeader();
+  const sideRef = useRef();
   const contentElement = document.getElementById("container");
 
   useEffect(() => {
@@ -19,8 +20,19 @@ const Home = () => {
         setPageScroll(false);
       }
     }
-    console.log(sessionStorage.getItem("isAuth"));
-  }, [contentElement]);
+
+    const handleOutside = (e) => {
+      if (sideRef.current && !sideRef.current.contains(e.target)) {
+        setSideToggle(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+    };
+  }, [contentElement, sideRef, setSideToggle]);
 
   return (
     <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover `}>
@@ -44,6 +56,7 @@ const Home = () => {
               className={`lg:hidden xl:hidden md:flex sm:block justify-between flex-1 md:w-screen sm:w-[calc(100vw-.5rem)]`}
             >
               <div
+                ref={sideRef}
                 className={`md:w-[calc(16.666667%-1rem)] md:translate-x-0 lg:translate-x-0 xl:translate-x-0 ${
                   sideToggle ? "w-screen" : "-translate-x-full"
                 }`}
@@ -51,7 +64,7 @@ const Home = () => {
                 <Sidebar />
               </div>
               <div
-                className={`flex md:max-h-[99.25vh] overflow-y-scroll flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
+                className={`flex overflow-y-scroll flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
               >
                 <NewPost />
                 <Main />

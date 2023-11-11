@@ -10,14 +10,14 @@ const Main = () => {
     getThreads().then((response) => {
       setThreads(response.data);
     });
-  }, []);
+  }, [sideToggle]);
 
   return (
     <div className="lg:w-[calc(50% - 1rem)] xl:w-[calc(58.333333% - 1rem)] relative mx-2 lg:mt-[3.75rem] xl:mt-[3.75rem] md:w-[97.5%] z-0">
       <div
         className={`${
-          sideToggle ? "overflow-hidden max-h-[46vh]" : ""
-        } lg:max-h-[calc(100vh-4rem)] xl:max-h-[calc(100vh-4.25rem)] md:overflow-hidden lg:overflow-auto xl:overflow-auto`}
+          sideToggle ? "overflow-hidden max-h-0" : ""
+        } md:max-h-fit lg:max-h-[calc(100vh-4rem)] xl:max-h-[calc(100vh-4.25rem)] md:overflow-hidden lg:overflow-auto xl:overflow-auto`}
       >
         {threads.map((thread) => {
           return (
@@ -27,7 +27,7 @@ const Main = () => {
             >
               <div className="flex w-full  lg:w-full md:w-full justify-between transform transition-all duration-300 ease-in-out hover:scale-105">
                 <div className="w-3/12 sm:w-2/12 md:w-2/12 lg:w-2/12 xl:w-2/12">
-                  <div className="w-[6rem] sm:w-[4.5rem] lg:w-[5.25rem] md:w-[5.25rem] xl:w-[6.5rem] mx-auto md lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-xl">
+                  <div className="w-[4rem] sm:w-[4.5rem] lg:w-[5.25rem] md:w-[5.25rem] xl:w-[6.5rem] mx-auto md lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-xl">
                     <img
                       className="w-full"
                       src={`https://picsum.photos/id/23${thread.user.id}/100`}
