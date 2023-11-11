@@ -4,8 +4,11 @@ const HeaderContext = createContext();
 
 export const HeaderProvider = ({ children }) => {
   const [sideToggle, setSideToggle] = useState(false);
+  const [menuToggle, setMenuToggle] = useState(false);
   return (
-    <HeaderContext.Provider value={{ sideToggle, setSideToggle }}>
+    <HeaderContext.Provider
+      value={{ sideToggle, setSideToggle, menuToggle, setMenuToggle }}
+    >
       {children}
     </HeaderContext.Provider>
   );

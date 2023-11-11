@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import NewPost from "../components/NewPost";
 import { Navigate } from "react-router-dom";
 import { useHeader } from "../features/HeaderContext";
+import { BiSolidChevronUpCircle } from "react-icons/bi";
 
 const Home = () => {
   const [pageScroll, setPageScroll] = useState(false);
@@ -64,11 +65,16 @@ const Home = () => {
                 <Sidebar />
               </div>
               <div
-                className={`flex overflow-y-scroll flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
+                className={`flex overflow-y-hidden flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
               >
                 <NewPost />
                 <Main />
               </div>
+            </div>
+            <div className="flex justify-center w-full mx-auto lg:hidden xl:hidden text-gray-200 text-4xl">
+              <a href="#container">
+                <BiSolidChevronUpCircle />
+              </a>
             </div>
           </>
         ) : (

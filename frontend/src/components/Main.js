@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getThreads } from "../api/Api";
 import { useHeader } from "../features/HeaderContext";
+import { useFilter } from "../features/FilterContext";
 
 const Main = () => {
   const [threads, setThreads] = useState([]);
   const { sideToggle } = useHeader();
+  const { activeFilter } = useFilter();
 
   useEffect(() => {
     getThreads().then((response) => {
       setThreads(response.data);
     });
   }, [sideToggle]);
+
+  const filteredThreads = threads.filter((thread) => {
+    return thread.tags.includes(activeFilter) || activeFilter === "all";
+  });
 
   return (
     <div className="lg:w-[calc(50% - 1rem)] xl:w-[calc(58.333333% - 1rem)] relative mx-2 lg:mt-[3.75rem] xl:mt-[3.75rem] md:w-[97.5%] z-0">
@@ -19,7 +25,7 @@ const Main = () => {
           sideToggle ? "overflow-hidden max-h-0" : ""
         } md:max-h-fit lg:max-h-[calc(100vh-4rem)] xl:max-h-[calc(100vh-4.25rem)] md:overflow-hidden lg:overflow-auto xl:overflow-auto`}
       >
-        {threads.map((thread) => {
+        {filteredThreads.map((thread) => {
           return (
             <div
               key={thread.uuid}
