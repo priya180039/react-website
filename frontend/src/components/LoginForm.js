@@ -19,7 +19,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (isSuccess) {
       console.log(isSuccess);
-      localStorage.setItem("isAuth", true);
+      sessionStorage.setItem("isAuth", true);
       navigate("/");
       setInputEmail("");
       setInputPassword("");

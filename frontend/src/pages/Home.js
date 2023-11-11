@@ -19,12 +19,13 @@ const Home = () => {
         setPageScroll(false);
       }
     }
+    console.log(sessionStorage.getItem("isAuth"));
   }, [contentElement]);
 
   return (
-    <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover`}>
+    <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover `}>
       <div id="container">
-        {localStorage.getItem("isAuth") === "true" ? (
+        {sessionStorage.getItem("isAuth") === "true" ? (
           <>
             <Header />
             {/* Ketika screen large atau lebih */}
@@ -40,21 +41,17 @@ const Home = () => {
 
             {/* Ketika screen medium atau kurang */}
             <div
-              className={`lg:hidden xl:hidden md:flex sm:block justify-between flex-1 ${
-                pageScroll
-                  ? "md:w-[calc(100%-.5rem)] sm:w-[calc(100vw-.5rem)]"
-                  : ""
-              }`}
+              className={`lg:hidden xl:hidden md:flex sm:block justify-between flex-1 md:w-screen sm:w-[calc(100vw-.5rem)]`}
             >
               <div
                 className={`md:w-[calc(16.666667%-1rem)] md:translate-x-0 lg:translate-x-0 xl:translate-x-0 ${
-                  sideToggle ? "" : "-translate-x-full"
+                  sideToggle ? "w-screen" : "-translate-x-full"
                 }`}
               >
                 <Sidebar />
               </div>
               <div
-                className={`flex flex-col flex-1 md:w-10/12 sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
+                className={`flex md:max-h-[99.25vh] overflow-y-scroll flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
               >
                 <NewPost />
                 <Main />

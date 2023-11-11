@@ -46,8 +46,9 @@ const Header = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(LogoutUser());
-    localStorage.setItem("isAuth", false);
-    localStorage.removeItem("isAuth");
+    sessionStorage.setItem("isAuth", false);
+    sessionStorage.removeItem("isAuth");
+    sessionStorage.clear();
     navigate("/sign");
   };
 

@@ -8,7 +8,7 @@ const LandingForm = () => {
   const { signType } = useSign();
   return (
     <>
-      {localStorage.getItem("isAuth") === "true" ? (
+      {sessionStorage.getItem("isAuth") === "true" ? (
         <Navigate to="/" />
       ) : (
         <>
