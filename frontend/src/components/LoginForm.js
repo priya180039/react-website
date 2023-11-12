@@ -50,10 +50,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-1/2 m-auto h-screen flex flex-col items-center">
+    <div className="w-10/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-full items-center pt-2 px-4 text-xl font-exo text-green-500 font-bold my-auto"
+        className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
       >
         <div className="text-center my-4 text-4xl">
           <p className="mix-blend-hard-light">Login</p>
@@ -64,7 +64,7 @@ const LoginForm = () => {
               Email
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errEmail ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -87,7 +87,7 @@ const LoginForm = () => {
               Password
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errPassword ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -127,7 +127,14 @@ const LoginForm = () => {
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex text-gray-300 transform transition-all duration-200 ease-in-out">
           <p className="mr-2">Don't have an account yet?</p>
-          <Link onClick={() => signUp()} className="hover:text-green-500">
+          <Link
+            onClick={() => {
+              signUp();
+              setErrEmail("");
+              setErrPassword("");
+            }}
+            className="hover:text-green-500"
+          >
             Join us!
           </Link>
         </div>

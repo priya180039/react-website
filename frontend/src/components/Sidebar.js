@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getThreads } from "../api/Api";
 import { Link } from "react-router-dom";
 import { useFilter } from "../features/FilterContext";
+import { useHeader } from "../features/HeaderContext";
 
 const Sidebar = () => {
   const [threads, setThreads] = useState([]);
   const { activeFilter, setActiveFilter } = useFilter();
+  const { setSideToggle } = useHeader();
 
   useEffect(() => {
     getThreads().then((response) => {
@@ -16,6 +18,7 @@ const Sidebar = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setActiveFilter(e.target.textContent);
+    setSideToggle(false);
   };
 
   const allTags = threads.reduce((all, thread) => {
@@ -42,21 +45,6 @@ const Sidebar = () => {
           >
             <Link>all</Link>
           </li>
-          {tags &&
-            tags.map((tag) => {
-              return (
-                <li
-                  onClick={(e) => handleClick(e)}
-                  key={tag}
-                  className={`w-11/12 border-2 px-1 transform transition-all duration-100 ease-in-out hover:bg-zinc-950/90 hover:border-transparent hover:text-gray-200 hover:cursor-pointer rounded-lg border-zinc-950/90 ${
-                    activeFilter === tag &&
-                    "bg-zinc-950/90 border-transparent text-gray-200 hover:cursor-default"
-                  }`}
-                >
-                  <Link>{tag}</Link>
-                </li>
-              );
-            })}
           {tags &&
             tags.map((tag) => {
               return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSign } from "../features/SignContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
@@ -22,8 +22,11 @@ const RegisterForm = () => {
     if (isSuccess) {
       localStorage.setItem("isAuth", true);
       navigate("/");
+      setErrFirst("");
+      setErrLast("");
       setErrEmail("");
       setErrPassword("");
+      setErrConfirmPassword("");
       setInputEmail("");
       setInputPassword("");
     }
@@ -72,10 +75,10 @@ const RegisterForm = () => {
     // }
   };
   return (
-    <div className="w-1/2 m-auto h-screen flex flex-col items-center">
+    <div className="w-10/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-full items-center pt-2 px-4 text-xl font-exo text-green-500 font-bold my-auto"
+        className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
       >
         <div className="text-center my-4 text-4xl">
           <p className="mix-blend-hard-light">Register</p>
@@ -86,7 +89,7 @@ const RegisterForm = () => {
               Firstname
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errFirst ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -108,7 +111,7 @@ const RegisterForm = () => {
               Lastname
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errLast ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -130,7 +133,7 @@ const RegisterForm = () => {
               Email
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errEmail ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -152,7 +155,7 @@ const RegisterForm = () => {
               Password
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errPassword ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -179,7 +182,7 @@ const RegisterForm = () => {
               Confirm Password
             </label>
             <span
-              className={`text-red-700 text-lg font-lora mix-blend-hard-light ml-4 ${
+              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
                 errConfirmPassword ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -201,16 +204,26 @@ const RegisterForm = () => {
           <button
             id="register"
             type="submit"
-            className="w-full bg-green-500 text-gray-200 mix-blend-hard-light py-2 mt-3 rounded-md"
+            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-3 rounded-md"
           >
             Register
           </button>
         </div>
-        <div className="w-[calc(83.333333%+1rem)] flex">
+        <div className="w-[calc(83.333333%+1rem)] flex text-gray-300 transform transition-all duration-200 ease-in-out">
           <p className="mr-2">Already have an account?</p>
-          <button onClick={() => signIn()} className="text-gray-300">
+          <Link
+            onClick={() => {
+              signIn();
+              setErrFirst("");
+              setErrLast("");
+              setErrEmail("");
+              setErrPassword("");
+              setErrConfirmPassword("");
+            }}
+            className="hover:text-green-500"
+          >
             Login now!
-          </button>
+          </Link>
         </div>
       </form>
     </div>

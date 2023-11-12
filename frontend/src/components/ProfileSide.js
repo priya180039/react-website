@@ -36,7 +36,7 @@ const ProfileSide = (props) => {
               alt="profile"
             />
           </div>
-          <div className="flex flex-col w-4/12 md:w-9/12 lg:w-9/12 xl:w-9/12 mx-auto">
+          <div className="flex text-center flex-col w-6/12 md:w-9/12 lg:w-9/12 xl:w-9/12 mx-auto">
             <div className="bg-gray-300 rounded-md p-2 px-4 my-3 md:my-2 lg:my-2.5 xl:my-2 w-full shadow-xl">
               <p className="scale-105">
                 {userData.user.firstName + " " + userData.user.lastName}
