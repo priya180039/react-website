@@ -20,6 +20,7 @@ const LoginForm = () => {
     if (isSuccess) {
       console.log(isSuccess);
       sessionStorage.setItem("isAuth", true);
+      sessionStorage.setItem("activeTab", "home");
       navigate("/");
       setInputEmail("");
       setInputPassword("");

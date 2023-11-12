@@ -7,7 +7,12 @@ export const HeaderProvider = ({ children }) => {
   const [menuToggle, setMenuToggle] = useState(false);
   return (
     <HeaderContext.Provider
-      value={{ sideToggle, setSideToggle, menuToggle, setMenuToggle }}
+      value={{
+        sideToggle,
+        setSideToggle,
+        menuToggle,
+        setMenuToggle,
+      }}
     >
       {children}
     </HeaderContext.Provider>

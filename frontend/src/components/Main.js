@@ -33,7 +33,7 @@ const Main = () => {
             >
               <div className="flex w-full  lg:w-full md:w-full justify-between transform transition-all duration-300 ease-in-out hover:scale-105">
                 <div className="w-3/12 sm:w-2/12 md:w-2/12 lg:w-2/12 xl:w-2/12">
-                  <div className="w-[4rem] sm:w-[4.5rem] lg:w-[5.25rem] md:w-[5.25rem] xl:w-[6.5rem] mx-auto md lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-xl">
+                  <div className="w-[4rem] sm:w-[4.5rem] lg:w-[5.25rem] md:w-[5.25rem] xl:w-[6.5rem] mx-auto lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-xl">
                     <img
                       className="w-full"
                       src={`https://picsum.photos/id/23${thread.user.id}/100`}

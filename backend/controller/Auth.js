@@ -32,6 +32,7 @@ export const Authentication = async (req, res) => {
       [Sequelize.literal('CONCAT(firstName, " ", lastName)'), "name"],
       "email",
       "role",
+      "createdAt",
     ],
     where: {
       uuid: req.session.userId,

@@ -12,11 +12,11 @@ const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [headerCollapse, setHeaderCollapse] = useState(false);
   const [expand, setExpand] = useState(false);
-  const [activeTab, setActiveTab] = useState("home");
   const { sideToggle, setSideToggle, menuToggle, setMenuToggle } = useHeader();
   const { setActiveFilter } = useFilter();
   const buttonRef = useRef();
   const menuRef = useRef();
+  const activeTab = sessionStorage.getItem("activeTab");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -61,14 +61,20 @@ const Header = () => {
     e.preventDefault();
     dispatch(LogoutUser());
     sessionStorage.setItem("isAuth", false);
+    sessionStorage.setItem("activeTab", "home");
     sessionStorage.removeItem("isAuth");
+    sessionStorage.removeItem("activeTab");
     sessionStorage.clear();
     navigate("/sign");
   };
 
+  const setActiveTab = (val) => {
+    sessionStorage.setItem("activeTab", val);
+  };
+
   return (
     <header
-      className={`w-full transform transition-all duration-300 ease-in fixed bg-sky-500 flex justify-between items-center px-8 z-50 ${
+      className={`w-full transform transition-all duration-300 ease-in fixed top-0 left-0 bg-sky-500 flex justify-between items-center px-8 z-50 ${
         headerCollapse && !sideToggle
           ? "-translate-y-full opacity-0"
           : "opacity-100"
@@ -109,7 +115,7 @@ const Header = () => {
             setActiveFilter("all");
             setActiveTab("home");
           }}
-          to={activeTab === "home" ? "/" : "#"}
+          to="/"
           className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
             activeTab === "home"
               ? "bg-gray-200 hover:cursor-default"
@@ -131,7 +137,7 @@ const Header = () => {
         </NavLink>
         <NavLink
           onClick={() => setActiveTab("profile")}
-          to={activeTab === "profile" ? "#" : "#"}
+          to="/profile"
           className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
             activeTab === "profile"
               ? "bg-gray-200 hover:cursor-default"
@@ -202,7 +208,7 @@ const Header = () => {
         </NavLink>
         <NavLink
           onClick={() => setActiveTab("profile")}
-          to={activeTab === "profile" ? "#" : "#"}
+          to={activeTab === "profile" ? "/profile" : "#"}
           className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
             activeTab === "profile"
               ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
