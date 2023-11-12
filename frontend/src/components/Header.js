@@ -92,8 +92,12 @@ const Header = () => {
           />
         ) : (
           <BiFilterAlt
-            onClick={() => setSideToggle(true)}
-            className="text-3xl transform transition-all duration-200 ease-in-out hover:text-gray-200 hover:cursor-pointer"
+            onClick={() => activeTab === "home" && setSideToggle(true)}
+            className={`text-3xl transform transition-all duration-200 ease-in-out hover:text-gray-200 ${
+              activeTab !== "home"
+                ? "opacity-0 overflow-hidden hover:cursor-default"
+                : "hover:cursor-pointer"
+            }`}
           />
         )}
       </div>
@@ -125,8 +129,10 @@ const Header = () => {
           Home
         </NavLink>
         <NavLink
-          onClick={() => setActiveTab("dashboard")}
-          to={activeTab === "dashboard" ? "#" : "#"}
+          onClick={() => {
+            setActiveTab("dashboard");
+          }}
+          to="/dashboard"
           className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
             activeTab === "dashboard"
               ? "bg-gray-200 hover:cursor-default"
@@ -181,12 +187,17 @@ const Header = () => {
       </div>
       <nav
         className={`absolute text-center text-gray-200 py-4 w-full bg-zinc-950/90 top-[3.4rem] left-0 flex flex-col h-fit md:hidden lg:hidden xl:hidden items-center text-xl transform transition-all duration-500 ease-in-out ${
-          menuToggle ? "opacity-100" : "opacity-0 overflow-hidden"
+          menuToggle
+            ? "opacity-100"
+            : "opacity-0 -translate-x-full overflow-hidden"
         }`}
       >
         <NavLink
-          onClick={() => setActiveTab("home")}
-          to={activeTab === "home" ? "/" : "#"}
+          onClick={() => {
+            setActiveFilter("all");
+            setActiveTab("home");
+          }}
+          to="/"
           className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
             activeTab === "home"
               ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
@@ -196,8 +207,10 @@ const Header = () => {
           Home
         </NavLink>
         <NavLink
-          onClick={() => setActiveTab("dashboard")}
-          to={activeTab === "dashboard" ? "#" : "#"}
+          onClick={() => {
+            setActiveTab("dashboard");
+          }}
+          to="/dashboard"
           className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
             activeTab === "dashboard"
               ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
@@ -207,8 +220,10 @@ const Header = () => {
           Dashboard
         </NavLink>
         <NavLink
-          onClick={() => setActiveTab("profile")}
-          to={activeTab === "profile" ? "/profile" : "#"}
+          onClick={() => {
+            setActiveTab("profile");
+          }}
+          to="/profile"
           className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
             activeTab === "profile"
               ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
@@ -219,7 +234,7 @@ const Header = () => {
         </NavLink>
         <NavLink
           onClick={(e) => handleLogout(e)}
-          className="transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 hover:cursor-pointer"
+          className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 hover:cursor-pointer`}
         >
           Logout
         </NavLink>

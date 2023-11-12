@@ -25,9 +25,9 @@ PATCH  http://localhost:5000/users/e4e8eff7-49f6-45f9-a05e-79493772fe0b
 Content-Type: application/json
 
 {
-    "email": "uveclee@gmail.com",
-    "password": "uveclee",
-    "confPassword": "uveclee"
+    "email": "uveclee@gmail.",
+    "password": "",
+    "confPassword": ""
 }
 
 //Delete user

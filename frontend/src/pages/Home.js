@@ -58,20 +58,28 @@ const Home = () => {
             >
               <div
                 ref={sideRef}
-                className={`md:w-[calc(16.666667%-1rem)] md:translate-x-0 lg:translate-x-0 xl:translate-x-0 ${
-                  sideToggle ? "w-screen" : "-translate-x-full"
+                className={`md:w-[calc(16.666667%-1rem)] md:translate-x-0 lg:translate-x-0 xl:translate-x-0 transform transition-all duration-500 ease-in-out ${
+                  sideToggle ? "w-screen" : "-translate-x-full opacity-0"
                 }`}
               >
                 <Sidebar />
               </div>
               <div
-                className={`flex overflow-y-hidden flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal`}
+                className={`flex overflow-y-hidden flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal transform transition-all duration-500 ease-in-out ${
+                  sideToggle
+                    ? "-translate-y-full opacity-0 overflow-hidden"
+                    : ""
+                }`}
               >
                 <NewPost />
                 <Main />
               </div>
             </div>
-            <div className="flex justify-center w-full mx-auto lg:hidden xl:hidden text-gray-200 text-4xl">
+            <div
+              className={`flex justify-center w-full mx-auto lg:hidden xl:hidden text-gray-200 text-4xl ${
+                sideToggle && "hidden"
+              }`}
+            >
               <a href="#container">
                 <BiSolidChevronUpCircle />
               </a>

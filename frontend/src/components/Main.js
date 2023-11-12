@@ -12,7 +12,7 @@ const Main = () => {
     getThreads().then((response) => {
       setThreads(response.data);
     });
-  }, [sideToggle]);
+  }, []);
 
   const filteredThreads = threads.filter((thread) => {
     return thread.tags.includes(activeFilter) || activeFilter === "all";
@@ -23,7 +23,7 @@ const Main = () => {
       <div
         className={`${
           sideToggle ? "overflow-hidden max-h-0" : ""
-        } md:max-h-fit lg:max-h-[calc(100vh-4rem)] xl:max-h-[calc(100vh-4.25rem)] md:overflow-hidden lg:overflow-auto xl:overflow-auto`}
+        } md:max-h-fit lg:max-h-[calc(100vh-4rem)] xl:max-h-[calc(100vh-4.25rem)] md:overflow-hidden lg:overflow-auto xl:overflow-auto transform transition-all duration-500 ease-in-out`}
       >
         {filteredThreads.map((thread) => {
           return (

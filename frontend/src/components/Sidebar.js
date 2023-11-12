@@ -57,6 +57,21 @@ const Sidebar = () => {
                 </li>
               );
             })}
+          {tags &&
+            tags.map((tag) => {
+              return (
+                <li
+                  onClick={(e) => handleClick(e)}
+                  key={tag}
+                  className={`w-11/12 border-2 px-1 transform transition-all duration-100 ease-in-out hover:bg-zinc-950/90 hover:border-transparent hover:text-gray-200 hover:cursor-pointer rounded-lg border-zinc-950/90 ${
+                    activeFilter === tag &&
+                    "bg-zinc-950/90 border-transparent text-gray-200 hover:cursor-default"
+                  }`}
+                >
+                  <Link>{tag}</Link>
+                </li>
+              );
+            })}
         </ul>
       </div>
     </div>
