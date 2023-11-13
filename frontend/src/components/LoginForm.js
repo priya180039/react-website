@@ -26,18 +26,26 @@ const LoginForm = () => {
       setInputPassword("");
     }
     if (isError) {
-      setErrPassword(message);
+      if (message === "User tidak ditemukan") {
+        setErrEmail(message);
+      } else {
+        setErrPassword(message);
+      }
     }
     dispatch(reset());
   }, [isSuccess, isError, message, navigate, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrEmail("");
+    setErrPassword("");
     if (inputEmail.length === 0 || inputPassword.length === 0) {
       if (inputEmail.length === 0) {
         setErrEmail("Tidak boleh kosong!");
       } else {
-        setErrEmail("");
+        if (!/\S+@\S+\.\S+/.test(e.target.value)) {
+          setErrEmail("Email tidak valid");
+        } else setErrEmail("");
       }
       if (inputPassword.length === 0) {
         setErrPassword("Tidak boleh kosong!");
@@ -50,7 +58,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-10/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
+    <div className="w-11/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
@@ -59,17 +67,15 @@ const LoginForm = () => {
           <p className="mix-blend-hard-light">Login</p>
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="email" className="mix-blend-hard-light">
-              Email
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg xl:text-lg font-lora mix-blend-hard-light ${
                 errEmail ? "opacity-100" : "opacity-0"
               }`}
             >
               {errEmail}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="email"
@@ -77,22 +83,23 @@ const LoginForm = () => {
               setInputEmail(e.target.value);
               console.log(inputEmail);
             }}
+            placeholder="Your email"
             value={inputEmail}
-            className="text-zinc-950 font-light font-lora w-full mix-blend-lighten py-2 px-3 rounded-md"
+            className={`text-zinc-950 font-light border-2 bg-gray-300 focus:bg-gray-100 font-lora w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errEmail ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="password" className="mix-blend-hard-light">
-              Password
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg xl:text-lg font-lora mix-blend-hard-light ${
                 errPassword ? "opacity-100" : "opacity-0"
               }`}
             >
               {errPassword}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="password"
@@ -101,8 +108,11 @@ const LoginForm = () => {
               setInputPassword(e.target.value);
               console.warn("password received");
             }}
+            placeholder="Your password"
             value={inputPassword}
-            className="text-zinc-950 font-light w-full mix-blend-lighten py-2 px-3 rounded-md"
+            className={`text-zinc-950 font-light border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errPassword ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
@@ -132,6 +142,8 @@ const LoginForm = () => {
               signUp();
               setErrEmail("");
               setErrPassword("");
+              setInputEmail("");
+              setInputPassword("");
             }}
             className="hover:text-green-500"
           >

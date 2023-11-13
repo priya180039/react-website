@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSign } from "../features/SignContext";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { registerUser } from "../api/Api";
 
 const RegisterForm = () => {
   const [inputFirst, setInputFirst] = useState("");
@@ -14,68 +14,94 @@ const RegisterForm = () => {
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
   const [errConfirmPassword, setErrConfirmPassword] = useState("");
-  const { isSuccess, isError, message } = useSelector((state) => state.auth);
+  const [disabled, setDisabled] = useState(false);
+  const [err, setErr] = useState(false);
   const navigate = useNavigate();
   const { signIn } = useSign();
+  let done = false;
 
   useEffect(() => {
-    if (isSuccess) {
-      localStorage.setItem("isAuth", true);
-      navigate("/");
-      setErrFirst("");
-      setErrLast("");
-      setErrEmail("");
-      setErrPassword("");
-      setErrConfirmPassword("");
-      setInputEmail("");
-      setInputPassword("");
-    }
-    if (isError) {
-      setErrEmail("");
-      setErrPassword(message);
-    }
-  }, [isSuccess, isError, message, navigate]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
     if (
-      inputFirst.length < 3 ||
-      inputFirst.length > 100 ||
-      inputLast.length < 3 ||
-      inputLast.length > 100 ||
+      inputFirst.length === 0 ||
+      inputLast.length === 0 ||
       inputEmail.length === 0 ||
       inputPassword.length === 0 ||
       inputConfirmPassword.length === 0
     ) {
-      if (inputFirst.length < 3) {
-        setErrFirst("Minimal 3 huruf!");
-      } else if (inputFirst.length > 100) {
-        setErrFirst("Maksimal 100 huruf!");
-      }
-      if (inputLast.length < 3) {
-        setErrLast("Minimal 3 huruf!");
-      } else if (inputLast.length > 100) {
-        setErrLast("Maksimal 100 huruf!");
-      }
-      if (inputEmail.length === 0) {
-        setErrEmail("Tidak boleh kosong!");
-      }
-      if (inputPassword.length === 0) {
-        setErrPassword("Tidak boleh kosong!");
-      }
-      if (inputConfirmPassword.length === 0) {
-        setErrConfirmPassword("Tidak boleh kosong!");
-      }
-      return;
+      setDisabled(true);
     }
-    // try {
-    //   dispatch(LoginUser({ inputEmail, inputPassword }));
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    if (err) {
+      setDisabled(true);
+    }
+  }, [
+    err,
+    disabled,
+    inputFirst,
+    inputLast,
+    inputEmail,
+    inputPassword,
+    inputConfirmPassword,
+  ]);
+
+  const validate = (val, field) => {
+    if (field === "password") {
+      if (val.length < 8) {
+        setErr(true);
+        setErrPassword("Password minimal 8 karakter");
+      } else {
+        setErr(false);
+        setDisabled(false);
+        done = true;
+        setErrPassword("");
+      }
+      if (done) {
+        if (inputConfirmPassword !== val) {
+          setErr(true);
+          setErrConfirmPassword("Confirm Password tidak cocok");
+        } else {
+          setErr(false);
+          setErrConfirmPassword("");
+        }
+      }
+    }
+    if (field === "confirmpassword") {
+      if (inputPassword !== val) {
+        setErr(true);
+        setErrConfirmPassword("Confirm Password tidak cocok");
+      } else {
+        setErr(false);
+        setDisabled(false);
+        setErrConfirmPassword("");
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerUser({
+      firstName: inputFirst,
+      lastName: inputLast,
+      email: inputEmail,
+      password: inputPassword,
+      confPassword: inputConfirmPassword,
+      role: "learner",
+    });
+    navigate("/sign");
+    signIn();
+    alert("Berhasil daftar akun");
+    setErrFirst("");
+    setErrLast("");
+    setErrEmail("");
+    setErrPassword("");
+    setErrConfirmPassword("");
+    setInputFirst("");
+    setInputLast("");
+    setInputEmail("");
+    setInputPassword("");
+    setInputConfirmPassword("");
   };
   return (
-    <div className="w-10/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
+    <div className="w-11/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
@@ -84,127 +110,165 @@ const RegisterForm = () => {
           <p className="mix-blend-hard-light">Register</p>
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="registfirstname" className="mix-blend-hard-light">
-              Firstname
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg font-lora mix-blend-hard-light ${
                 errFirst ? "opacity-100" : "opacity-0"
               }`}
             >
               {errFirst}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="registfirstname"
             onChange={(e) => {
               setInputFirst(e.target.value);
+              if (e.target.value.length < 3) {
+                setErr(true);
+                setErrFirst("Minimal 3 huruf!");
+              } else if (e.target.value.length > 100) {
+                setErr(true);
+                setErrFirst("Maksimal 100 huruf!");
+              } else {
+                setErrFirst("");
+                setErr(false);
+                setDisabled(false);
+              }
             }}
+            placeholder="Your firstname"
             value={inputFirst}
-            className="text-zinc-950 font-light font-lora w-full mix-blend-lighten py-2 rounded-md"
+            className={`text-zinc-950 font-light font-lora w-full border-2 bg-gray-300 focus:bg-gray-100 mix-blend-lighten py-2 px-3 rounded-md ${
+              errFirst ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="registlastname" className="mix-blend-hard-light">
-              Lastname
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg font-lora mix-blend-hard-light ${
                 errLast ? "opacity-100" : "opacity-0"
               }`}
             >
               {errLast}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="registlastname"
             onChange={(e) => {
               setInputLast(e.target.value);
+              console.log(e.target.value);
+              if (e.target.value.length < 3) {
+                setErr(true);
+                setErrLast("Minimal 3 huruf!");
+              } else if (e.target.value.length > 100) {
+                setErr(true);
+                setErrLast("Maksimal 100 huruf!");
+              } else {
+                setErrLast("");
+                setErr(false);
+                setDisabled(false);
+              }
             }}
+            placeholder="Your lastname"
             value={inputLast}
-            className="text-zinc-950 font-light font-lora w-full mix-blend-lighten py-2 rounded-md"
+            className={`text-zinc-950 font-light font-lora border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errLast ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="registemail" className="mix-blend-hard-light">
-              Email
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg xl:text-lg font-lora mix-blend-hard-light ${
                 errEmail ? "opacity-100" : "opacity-0"
               }`}
             >
               {errEmail}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="registemail"
             onChange={(e) => {
               setInputEmail(e.target.value);
+              if (!/\S+@\S+\.\S+/.test(e.target.value)) {
+                setErrEmail("Email tidak valid");
+                setErr(true);
+              } else {
+                setErrEmail("");
+                setErr(false);
+                setDisabled(false);
+              }
             }}
+            placeholder="Your email"
             value={inputEmail}
-            className="text-zinc-950 font-light font-lora w-full mix-blend-lighten py-2 rounded-md"
+            className={`text-zinc-950 font-light font-lora border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errEmail ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label htmlFor="registpassword" className="mix-blend-hard-light">
-              Password
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg font-lora mix-blend-hard-light ${
                 errPassword ? "opacity-100" : "opacity-0"
               }`}
             >
               {errPassword}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="registpassword"
             type="password"
             onChange={(e) => {
               setInputPassword(e.target.value);
+              validate(e.target.value, "password");
               console.warn("password received");
             }}
+            placeholder="Your password"
             value={inputPassword}
-            className="text-zinc-950 font-light w-full mix-blend-lighten py-2 rounded-md"
+            className={`text-zinc-950 font-light border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errPassword ? "border-red-500 bg-red-200" : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
-          <div className="w-full inline-block">
-            <label
-              htmlFor="registconfpassword"
-              className="mix-blend-hard-light"
-            >
-              Confirm Password
-            </label>
-            <span
-              className={`text-red-700 font-lora mix-blend-hard-light ml-4 ${
+          <div className="w-full flex">
+            <div
+              className={`text-red-500 text-sm md:text-lg lg:text-lg font-lora mix-blend-hard-light ${
                 errConfirmPassword ? "opacity-100" : "opacity-0"
               }`}
             >
               {errConfirmPassword}
-            </span>
+            </div>
+            <div>&nbsp;</div>
           </div>
           <input
             id="registconfpassword"
             type="password"
             onChange={(e) => {
               setInputConfirmPassword(e.target.value);
+              validate(e.target.value, "confirmpassword");
               console.warn("password received");
             }}
+            placeholder="Match with your password"
             value={inputConfirmPassword}
-            className="text-zinc-950 font-light w-full mix-blend-lighten py-2 rounded-md"
+            className={`text-zinc-950 font-light border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md ${
+              errConfirmPassword
+                ? "border-red-500 bg-red-200"
+                : "border-green-500"
+            }`}
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
           <button
+            disabled={disabled}
             id="register"
             type="submit"
-            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-3 rounded-md"
+            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-3 disabled:bg-gray-400 disabled:text-zinc-950/90 disabled:hover:cursor-not-allowed disabled:hover:border-transparent rounded-md"
           >
             Register
           </button>
@@ -219,6 +283,11 @@ const RegisterForm = () => {
               setErrEmail("");
               setErrPassword("");
               setErrConfirmPassword("");
+              setInputFirst("");
+              setInputLast("");
+              setInputEmail("");
+              setInputPassword("");
+              setInputConfirmPassword("");
             }}
             className="hover:text-green-500"
           >

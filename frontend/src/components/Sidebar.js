@@ -28,10 +28,10 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`top-[3.25rem] md:top-0 lg:top-0 xl:top-0 absolute md:relative lg:relative xl:relative md:overflow-y-auto lg:overflow-y-auto xl:overflow-y-auto md:block lg:block w-full lg:w-3/12 xl:w-2/12 md:w-full z-10`}
+      className={`top-[3.25rem] md:top-0 lg:top-0 xl:top-0 absolute md:relative lg:relative xl:relative md:overflow-y-auto lg:overflow-y-auto xl:overflow-y-auto md:block lg:block w-full lg:w-2/12 xl:w-2/12 md:w-full z-10`}
     >
       <div
-        className={`max-h-[calc(100vh-3.25rem)] md:max-h-[calc(100vh-.5rem)] lg:max-h-[calc(100vh-.5rem)] xl:max-h-[calc(100vh-.75rem)] overflow-auto md:overflow-auto lg:overflow-auto xl:overflow-auto`}
+        className={`max-h-[calc(100vh-3.25rem)] md:max-h-[calc(100vh-.5rem)] lg:max-h-[calc(100vh-.5rem)] xl:max-h-[calc(100vh-.75rem)] overflow-auto md:overflow-auto lg:overflow-auto xl:overflow-auto transform transition-all duration-500 ease-in-out`}
       >
         <ul
           className={`bg-gray-200 flex flex-col items-center gap-2 md:h-fit lg:h-fit xl:h-fit md:mt-[4.25rem] lg:mt-[4.25rem] xl:mt-[4.25rem] rounded-md py-2 text-3xl md:text-sm lg:text-base xl:text-base `}

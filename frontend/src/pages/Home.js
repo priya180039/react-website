@@ -8,6 +8,7 @@ import { useHeader } from "../features/HeaderContext";
 import { BiSolidChevronUpCircle } from "react-icons/bi";
 
 const Home = () => {
+  const [updated, setUpdated] = useState(false);
   const [pageScroll, setPageScroll] = useState(false);
   const { sideToggle, setSideToggle } = useHeader();
   const sideRef = useRef();
@@ -28,10 +29,22 @@ const Home = () => {
       }
     };
 
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth > 768) {
+        setSideToggle(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleOutside);
+    window.addEventListener("load", handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       document.removeEventListener("mousedown", handleOutside);
+      window.removeEventListener("load", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [contentElement, sideRef, setSideToggle]);
 
@@ -48,8 +61,8 @@ const Home = () => {
               }`}
             >
               <Sidebar />
-              <Main />
-              <NewPost />
+              <Main updated={updated} setUpdated={setUpdated} />
+              <NewPost setUpdated={setUpdated} />
             </div>
 
             {/* Ketika screen medium atau kurang */}
@@ -58,9 +71,15 @@ const Home = () => {
             >
               <div
                 ref={sideRef}
-                className={`md:w-[calc(16.666667%-1rem)] md:translate-x-0 lg:translate-x-0 xl:translate-x-0 transform transition-all duration-500 ease-in-out ${
+                className={`block md:hidden lg:hidden xl:hidden transform transition-all duration-500 ease-in-out ${
                   sideToggle ? "w-screen" : "-translate-x-full opacity-0"
                 }`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                ref={sideRef}
+                className={`hidden md:block lg:block xl:block md:w-[calc(16.666667%-1rem)] md:opacity-100 lg:opacity-100 xl:opacity-100 md:translate-x-0 lg:translate-x-0 xl:translate-x-0 transform transition-all duration-500 ease-in-out`}
               >
                 <Sidebar />
               </div>
@@ -71,8 +90,8 @@ const Home = () => {
                     : ""
                 }`}
               >
-                <NewPost />
-                <Main />
+                <NewPost setUpdated={setUpdated} />
+                <Main updated={updated} setUpdated={setUpdated} />
               </div>
             </div>
             <div

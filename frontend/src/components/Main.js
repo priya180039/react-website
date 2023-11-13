@@ -3,7 +3,7 @@ import { getThreads } from "../api/Api";
 import { useHeader } from "../features/HeaderContext";
 import { useFilter } from "../features/FilterContext";
 
-const Main = () => {
+const Main = (props) => {
   const [threads, setThreads] = useState([]);
   const { sideToggle } = useHeader();
   const { activeFilter } = useFilter();
@@ -12,14 +12,15 @@ const Main = () => {
     getThreads().then((response) => {
       setThreads(response.data);
     });
-  }, []);
+    props.setUpdated(false);
+  }, [props.updated, props]);
 
   const filteredThreads = threads.filter((thread) => {
     return thread.tags.includes(activeFilter) || activeFilter === "all";
   });
 
   return (
-    <div className="lg:w-[calc(50% - 1rem)] xl:w-[calc(58.333333% - 1rem)] relative mx-2 lg:mt-[3.75rem] xl:mt-[3.75rem] md:w-[97.5%] z-0">
+    <div className="lg:w-7/12 xl:w-7/12 relative mx-2 lg:mt-[3.75rem] xl:mt-[3.75rem] md:w-[97.5%] z-0">
       <div
         className={`${
           sideToggle ? "overflow-hidden max-h-0" : ""
@@ -36,7 +37,9 @@ const Main = () => {
                   <div className="w-[4rem] sm:w-[4.5rem] lg:w-[5.25rem] md:w-[5.25rem] xl:w-[6.5rem] mx-auto lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-xl">
                     <img
                       className="w-full"
-                      src={`https://picsum.photos/id/23${thread.user.id}/100`}
+                      src={`https://picsum.photos/id/${
+                        230 + thread.user.id
+                      }/300`}
                       alt="profile"
                     />
                   </div>

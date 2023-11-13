@@ -7,6 +7,7 @@ const ProfileSide = (props) => {
   useEffect(() => {
     getAuth().then((response) => {
       setUserData(response.data);
+      console.log(userData);
     });
     props.setUpdate(false);
   }, [props.update, props]);
@@ -32,7 +33,7 @@ const ProfileSide = (props) => {
           <div className="mb-2 w-[10rem] sm:w-[10rem] lg:w-[12.35rem] md:w-[11rem] xl:w-[13rem] mx-auto md lg:mr-auto xl:mr-auto rounded-full overflow-hidden shadow-2xl">
             <img
               className="w-full"
-              src={`https://picsum.photos/id/231/100`}
+              src={`https://picsum.photos/id/${230 + userData.user.id}/300`}
               alt="profile"
             />
           </div>

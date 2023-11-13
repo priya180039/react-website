@@ -16,6 +16,7 @@ export const getThreads = async (req, res) => {
           ],
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
     res.status(200).json(response);
   } catch (error) {
@@ -83,6 +84,7 @@ export const getThreadByUser = async (req, res) => {
         "content",
         "tags",
         "solved",
+        "createdAt",
       ],
       include: [
         {

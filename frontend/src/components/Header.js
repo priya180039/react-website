@@ -31,6 +31,13 @@ const Header = () => {
         setMenuToggle(false);
       }
     };
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth > 768) {
+        setMenuToggle(false);
+      }
+    };
 
     const handleScroll = () => {
       const currentPosition = window.scrollY;
@@ -49,11 +56,15 @@ const Header = () => {
     document.addEventListener("mousedown", handleOutsideLogout);
     document.addEventListener("mousedown", handleOutsideMenu);
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("load", handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideLogout);
       document.removeEventListener("mousedown", handleOutsideMenu);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("load", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [buttonRef, scrollPosition, setMenuToggle]);
 

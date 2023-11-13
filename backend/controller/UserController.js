@@ -34,17 +34,25 @@ export const getUserById = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const { firstName, lastName, email, password, confPassword, role } = req.body;
-  if (password !== confPassword)
-    return res
-      .status(500)
-      .json({ message: "Password dan Confirm Password tidak cocok" });
-  const hashPassword = await argon2.hash(password);
+
+  //VALIDASI INI DIPINDAH KE FRONTEND
+
+  let hashPassword;
+  if (password.length < 8) {
+    hashPassword = password;
+  } else {
+    if (password !== confPassword)
+      return res
+        .status(400)
+        .json({ message: "Password dan Confirm Password tidak cocok" });
+    else hashPassword = await argon2.hash(password);
+  }
   try {
     const emailCheck = await User.findAll({
       attributes: ["email"],
     });
     if (emailCheck.some((user) => user.email === email)) {
-      return res.status(500).json({ message: "Email registered!" });
+      return res.status(400).json({ message: "Email already registered!" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -80,7 +88,7 @@ export const updateUser = async (req, res) => {
   }
   if (password !== confPassword)
     return res
-      .status(500)
+      .status(400)
       .json({ message: "Password dan Confirm Password tidak cocok" });
 
   if (firstName === "" || firstName === null) {
@@ -108,7 +116,7 @@ export const updateUser = async (req, res) => {
     if (user.email === email) {
       tempEmail = user.email;
     } else if (emailCheck.some((user) => user.email === email)) {
-      return res.status(500).json({ message: "Email already registered!" });
+      return res.status(400).json({ message: "Email already registered!" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -131,7 +139,7 @@ export const updateUser = async (req, res) => {
     );
     res.status(200).json({ message: "User Updated" });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -150,6 +158,6 @@ export const deleteUser = async (req, res) => {
     });
     res.status(200).json({ message: "User Deleted" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
