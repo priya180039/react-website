@@ -220,6 +220,7 @@ const ProfileForm = (props) => {
               <input
                 id="email"
                 type="email"
+                autoComplete="email"
                 onChange={(e) => {
                   setInputEmail(e.target.value);
                 }}

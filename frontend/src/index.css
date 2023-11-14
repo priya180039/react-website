@@ -38,3 +38,19 @@ header div div span.font-exo {
 ::-webkit-scrollbar-track {
   background: rgb(229 231 235);
 }
+
+.reacttype {
+  background: -webkit-linear-gradient(
+    right,
+    rgb(98, 212, 4),
+    rgb(12, 195, 241)
+  );
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.active-link {
+  /* Gaya yang ingin diatur saat link aktif */
+  background-color: #ccc; /* Misalnya, mengubah latar belakang link */
+  cursor: default; /* Mengubah kursor saat link aktif */
+}

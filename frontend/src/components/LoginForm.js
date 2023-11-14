@@ -19,7 +19,6 @@ const LoginForm = () => {
   useEffect(() => {
     if (isSuccess) {
       sessionStorage.setItem("isAuth", true);
-      sessionStorage.setItem("activeTab", "home");
       navigate("/");
       setInputEmail("");
       setInputPassword("");
@@ -78,6 +77,7 @@ const LoginForm = () => {
           </div>
           <input
             id="email"
+            autoComplete="email"
             onChange={(e) => {
               setInputEmail(e.target.value);
             }}

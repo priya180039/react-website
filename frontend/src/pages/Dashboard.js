@@ -18,7 +18,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover `}>
+    <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover`}>
       <div id="container">
         {sessionStorage.getItem("isAuth") === "true" ? (
           <>
@@ -39,7 +39,7 @@ const Dashboard = () => {
             )}
           </>
         ) : (
-          <Navigate to="/sign" />
+          <Navigate to="/welcome" />
         )}
       </div>
     </div>

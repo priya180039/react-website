@@ -18,7 +18,7 @@ const Profile = () => {
             </div>
           </>
         ) : (
-          <Navigate to="/sign" />
+          <Navigate to="/welcome" />
         )}
       </div>
     </div>

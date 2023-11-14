@@ -39,14 +39,18 @@ const DashboardTable = (props) => {
   return (
     <div className="relative w-[calc(98.75%)] mx-auto md:ml-2 lg:mx-2 xl:mx-2 z-0">
       <div
-        className={`bg-gray-200 mt-[4rem] px-2 md:mt-[4.25rem] lg:mt-[4.25rem] xl:mt-[4.25rem] py-2 ${
+        className={`bg-gray-200 overflow-auto mt-[4rem] px-2 md:mt-[4.25rem] lg:mt-[4.25rem] xl:mt-[4.25rem] py-2 ${
           userData &&
           (userData.user.role === "expert"
             ? "rounded-ss-md rounded-se-md"
             : "rounded-md")
         }`}
       >
-        <div className="w-full border-2 rounded-md border-zinc-950/90">
+        <div
+          className={`w-full md:w-full lg:w-full xl:w-full border-2 rounded-md text-sm md:text-base lg:text-base xl:text-base border-zinc-950/90 ${
+            showThreads && "w-[150%]"
+          }`}
+        >
           {showThreads ? (
             <div
               onMouseOver={() => setChangeBtn(true)}
@@ -62,23 +66,23 @@ const DashboardTable = (props) => {
                 </Link>
               ) : (
                 <ul className="flex text-center flex-1 justify-between transform transition-all duration-300 ease-in-out">
-                  <li className="w-[3%] border-r-2 border-gray-400 py-2">No</li>
-                  <li className="w-[17%] border-r-2 border-gray-400 py-2">
+                  <li className="w-[4%] border-r-2 border-gray-400 py-2">No</li>
+                  <li className="w-[14%] border-r-2 border-gray-400 py-2">
                     Created At
                   </li>
                   <li className="w-[18%] border-r-2 border-gray-400 py-2">
                     Title
                   </li>
-                  <li className="w-[21%] border-r-2 border-gray-400 py-2">
+                  <li className="w-[17%] border-r-2 border-gray-400 py-2">
                     Content
                   </li>
-                  <li className="w-[15%] border-r-2 border-gray-400 py-2">
+                  <li className="w-[17%] border-r-2 border-gray-400 py-2">
                     Tags
                   </li>
-                  <li className="w-[6%] border-r-2 border-gray-400 py-2">
+                  <li className="w-[9%] border-r-2 border-gray-400 py-2">
                     Replies
                   </li>
-                  <li className="w-[10%] border-r-2 border-gray-400 py-2">
+                  <li className="w-[11%] border-r-2 border-gray-400 py-2">
                     Status
                   </li>
                   <li className="w-[10%] py-2">Action</li>
@@ -105,28 +109,28 @@ const DashboardTable = (props) => {
               return (
                 <div key={thread.uuid} className="flex flex-col flex-1 w-full">
                   <ul className="flex flex-1 justify-between">
-                    <li className="w-[3%] max-w-[3%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[4%] max-w-[4%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {i + 1}
                     </li>
-                    <li className="w-[17%] max-w-[17%] px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[14%] max-w-[14%] px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {thread.createdAt}
                     </li>
                     <li className="w-[18%] max-w-[18%] px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {thread.title}
                     </li>
-                    <li className="w-[21%] max-w-[21%] whitespace-nowrap overflow-ellipsis overflow-hidden px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[17%] max-w-[17%] whitespace-nowrap overflow-ellipsis overflow-hidden px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {thread.content}
                     </li>
-                    <li className="w-[15%] max-w-[15%] px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[17%] max-w-[17%] whitespace-nowrap overflow-ellipsis overflow-hidden px-1 border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {thread.tags.join(", ")}
                     </li>
-                    <li className="w-[6%] max-w-[6%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[9%] max-w-[9%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {
                         replies.filter((reply) => reply.thread.id === thread.id)
                           .length
                       }
                     </li>
-                    <li className="w-[10%] max-w-[10%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
+                    <li className="w-[11%] max-w-[11%] text-center border-zinc-950/20 border-r-2 border-t-2 py-2">
                       {thread.solved === "0" ? "Unsolved" : "Solved"}
                     </li>
                     <li className="w-[10%] max-w-[10%] text-center border-zinc-950/20 border-t-2 py-2">

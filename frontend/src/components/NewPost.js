@@ -44,12 +44,14 @@ const NewPost = (props) => {
         } w-[calc(100%)] lg:max-h-[calc(100vh-4.25rem)] lg:overflow-auto xl:max-h-[calc(100vh-4.25rem)] xl:overflow-auto mt-[4rem] md:mt-[4.25rem] lg:mt-[4.25rem] xl:mt-[4.25rem] transform transition-all duration-500 ease-in-out`}
       >
         <input
+          name="title"
           value={inputTitle}
           onChange={(e) => setInputTitle(e.target.value)}
           className="w-full p-2 rounded-lg mb-2 bg-gray-200 focus:bg-gray-100"
           placeholder="Masukkan judul"
         />
         <textarea
+          name="content"
           value={inputContent}
           onChange={(e) => setInputContent(e.target.value)}
           className="w-full p-2 rounded-lg mb-0.5 bg-gray-200 focus:bg-gray-100 min-h-[10rem]"
@@ -57,6 +59,7 @@ const NewPost = (props) => {
         />
         <div className="flex p flex-1 mb-2 rounded-lg items-center bg-gray-200">
           <input
+            name="tags"
             value={tagRef}
             onChange={(e) => setTagRef(e.target.value)}
             className="w-full p-2 rounded-ss-lg rounded-es-lg bg-gray-200 focus:bg-gray-100"
@@ -82,7 +85,9 @@ const NewPost = (props) => {
                   key={tag}
                   className="rounded-xl flex items-center overflow-hidden justify-center pl-2 pr-1 py-1 bg-sky-500 text-zinc-950/90 hover:cursor-pointer hover:text-gray-200"
                 >
-                  <p className="text-lg pb-1 overflow-hidden">{tag}</p>
+                  <p className="text-lg pb-1 overflow-ellipsis overflow-hidden">
+                    {tag}
+                  </p>
                   <BiX className="text-xl ml-1" />
                 </div>
               );

@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { BiCog, BiMenu, BiFilterAlt, BiX } from "react-icons/bi";
 import { LogoutUser } from "../features/AuthSlice";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useHeader } from "../features/HeaderContext";
 import { useFilter } from "../features/FilterContext";
 
 const Header = () => {
   //COMMENT SCRIPT = CURRENTLY NOT IN USE
-
+  const [showFilter, setShowFilter] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [headerCollapse, setHeaderCollapse] = useState(false);
   const [expand, setExpand] = useState(false);
@@ -16,11 +16,13 @@ const Header = () => {
   const { setActiveFilter } = useFilter();
   const buttonRef = useRef();
   const menuRef = useRef();
-  const activeTab = sessionStorage.getItem("activeTab");
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    setShowFilter(location.pathname === "/");
+    console.log(showFilter);
     const handleOutsideLogout = (e) => {
       if (buttonRef.current && !buttonRef.current.contains(e.target)) {
         setExpand(false);
@@ -66,22 +68,16 @@ const Header = () => {
       window.removeEventListener("load", handleResize);
       window.removeEventListener("resize", handleResize);
     };
-  }, [buttonRef, scrollPosition, setMenuToggle]);
+  }, [buttonRef, scrollPosition, setMenuToggle, location, showFilter]);
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(LogoutUser());
     setActiveFilter("all");
     sessionStorage.setItem("isAuth", false);
-    sessionStorage.setItem("activeTab", "home");
     sessionStorage.removeItem("isAuth");
-    sessionStorage.removeItem("activeTab");
     sessionStorage.clear();
-    navigate("/sign");
-  };
-
-  const setActiveTab = (val) => {
-    sessionStorage.setItem("activeTab", val);
+    navigate("/welcome");
   };
 
   return (
@@ -104,9 +100,9 @@ const Header = () => {
           />
         ) : (
           <BiFilterAlt
-            onClick={() => activeTab === "home" && setSideToggle(true)}
+            onClick={() => showFilter && setSideToggle(true)}
             className={`text-3xl transform transition-all duration-200 ease-in-out hover:text-gray-200 ${
-              activeTab !== "home"
+              !showFilter
                 ? "opacity-0 overflow-hidden hover:cursor-default"
                 : "hover:cursor-pointer"
             }`}
@@ -117,7 +113,6 @@ const Header = () => {
         <NavLink
           onClick={() => {
             setActiveFilter("all");
-            setActiveTab("home");
           }}
           to="/"
           className="gap-4 text-3xl font-bold font-orbitron"
@@ -127,40 +122,35 @@ const Header = () => {
       </div>
       <nav className="hidden md:flex lg:flex xl:flex items-center text-xl">
         <NavLink
-          onClick={() => {
-            setActiveFilter("all");
-            setActiveTab("home");
-          }}
+          onClick={() => setActiveFilter("all")}
           to="/"
-          className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
-            activeTab === "home"
-              ? "bg-gray-200 hover:cursor-default"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out px-4 py-4 bg-gray-200 cursor-default"
+              : "transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 hover:cursor-pointer"
+          }
         >
           Home
         </NavLink>
         <NavLink
-          onClick={() => {
-            setActiveTab("dashboard");
-          }}
+          onClick={() => setShowFilter(false)}
           to="/dashboard"
-          className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
-            activeTab === "dashboard"
-              ? "bg-gray-200 hover:cursor-default"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out px-4 py-4 bg-gray-200 cursor-default"
+              : "transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 hover:cursor-pointer"
+          }
         >
           Dashboard
         </NavLink>
         <NavLink
-          onClick={() => setActiveTab("profile")}
+          onClick={() => setShowFilter(false)}
           to="/profile"
-          className={`transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 ${
-            activeTab === "profile"
-              ? "bg-gray-200 hover:cursor-default"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out px-4 py-4 bg-gray-200 cursor-default"
+              : "transform transition-all duration-200 ease-in-out px-4 py-4 hover:bg-gray-200 hover:cursor-pointer"
+          }
         >
           Profile
         </NavLink>
@@ -207,40 +197,35 @@ const Header = () => {
         <NavLink
           onClick={() => {
             setActiveFilter("all");
-            setActiveTab("home");
           }}
           to="/"
-          className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
-            activeTab === "home"
-              ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out w-full py-4 bg-gray-200 hover:cursor-default text-zinc-950/90"
+              : "transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 hover:cursor-pointer"
+          }
         >
           Home
         </NavLink>
         <NavLink
-          onClick={() => {
-            setActiveTab("dashboard");
-          }}
+          onClick={() => setShowFilter(false)}
           to="/dashboard"
-          className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
-            activeTab === "dashboard"
-              ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out w-full py-4 bg-gray-200 hover:cursor-default text-zinc-950/90"
+              : "transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 hover:cursor-pointer"
+          }
         >
           Dashboard
         </NavLink>
         <NavLink
-          onClick={() => {
-            setActiveTab("profile");
-          }}
+          onClick={() => setShowFilter(false)}
           to="/profile"
-          className={`transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 ${
-            activeTab === "profile"
-              ? "bg-gray-200 hover:cursor-default text-zinc-950/90"
-              : "hover:cursor-pointer"
-          }`}
+          className={({ isActive }) =>
+            isActive
+              ? "transform transition-all duration-200 ease-in-out w-full py-4 bg-gray-200 hover:cursor-default text-zinc-950/90"
+              : "transform transition-all duration-200 ease-in-out w-full py-4 hover:bg-gray-200 hover:text-zinc-950/90 hover:cursor-pointer"
+          }
         >
           Profile
         </NavLink>

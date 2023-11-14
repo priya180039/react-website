@@ -67,7 +67,7 @@ const Home = () => {
 
             {/* Ketika screen medium atau kurang */}
             <div
-              className={`lg:hidden xl:hidden md:flex sm:block justify-between flex-1 md:w-screen sm:w-[calc(100vw-.5rem)]`}
+              className={`lg:hidden xl:hidden md:flex sm:block justify-between flex-1 md:w-[100vw-.5rem] sm:w-[calc(100vw-.5rem)]`}
             >
               <div
                 ref={sideRef}
@@ -79,12 +79,12 @@ const Home = () => {
               </div>
               <div
                 ref={sideRef}
-                className={`hidden md:block lg:block xl:block md:w-[calc(16.666667%-1rem)] md:opacity-100 lg:opacity-100 xl:opacity-100 md:translate-x-0 lg:translate-x-0 xl:translate-x-0 transform transition-all duration-500 ease-in-out`}
+                className={`hidden md:block lg:block xl:block md:w-[calc(17%)] md:opacity-100 lg:opacity-100 xl:opacity-100 md:translate-x-0 lg:translate-x-0 xl:translate-x-0 transform transition-all duration-500 ease-in-out`}
               >
                 <Sidebar />
               </div>
               <div
-                className={`flex overflow-y-hidden flex-col flex-1 md:w-[calc(83.333333% - .5rem)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal transform transition-all duration-500 ease-in-out ${
+                className={`flex overflow-y-hidden flex-col flex-1 md:w-[calc(83%)] sm:w-full md:mix-blend-normal lg:mix-blend-normal xl:mix-blend-normal transform transition-all duration-500 ease-in-out ${
                   sideToggle
                     ? "-translate-y-full opacity-0 overflow-hidden"
                     : ""
@@ -105,7 +105,7 @@ const Home = () => {
             </div>
           </>
         ) : (
-          <Navigate to="/sign" />
+          <Navigate to="/welcome" />
         )}
       </div>
     </div>
