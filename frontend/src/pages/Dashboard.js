@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Header from "../components/Header";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import DashboardTable from "../components/DashboardTable";
+import DashboardReplies from "../components/DashboardReplies";
+import { getAuth } from "../api/Api";
 
 const Dashboard = () => {
-  const a = ["tes1", "tes2", "tes3"];
-  const [activeCard, setActiveCard] = useState(0);
+  const [changeSection, setChangeSection] = useState("");
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    if (sessionStorage.getItem("isAuth") === "true") {
+      getAuth().then((response) => {
+        setUserData(response.data);
+      });
+    }
+  }, []);
+
   return (
     <div className={`bg-main-low min-w-screen min-h-screen bg-fixed bg-cover `}>
       <div id="container">
         {sessionStorage.getItem("isAuth") === "true" ? (
           <>
             <Header />
-            <div className="flex justify-between flex-1 w-full">
-              <DashboardTable />
-            </div>
+            {userData && (
+              <div className="flex flex-col justify-start w-full">
+                <DashboardTable
+                  changeSection={changeSection}
+                  setChangeSection={setChangeSection}
+                />
+                {userData.user.role === "expert" && (
+                  <DashboardReplies
+                    changeSection={changeSection}
+                    setChangeSection={setChangeSection}
+                  />
+                )}
+              </div>
+            )}
           </>
         ) : (
           <Navigate to="/sign" />

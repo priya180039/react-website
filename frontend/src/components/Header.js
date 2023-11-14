@@ -71,6 +71,7 @@ const Header = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(LogoutUser());
+    setActiveFilter("all");
     sessionStorage.setItem("isAuth", false);
     sessionStorage.setItem("activeTab", "home");
     sessionStorage.removeItem("isAuth");

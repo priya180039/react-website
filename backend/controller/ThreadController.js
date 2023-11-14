@@ -13,6 +13,7 @@ export const getThreads = async (req, res) => {
             "id",
             [Sequelize.literal('CONCAT(firstName, " ", lastName)'), "name"],
             "email",
+            "role",
           ],
         },
       ],

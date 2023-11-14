@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import { FilterProvider } from "./features/FilterContext";
 import { HeaderProvider } from "./features/HeaderContext";
+import Thread from "./pages/Thread";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/sign" element={<LandingForm />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/thread/:id" element={<Thread />} />
             </Routes>
           </Router>
         </FilterProvider>

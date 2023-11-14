@@ -18,7 +18,6 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(isSuccess);
       sessionStorage.setItem("isAuth", true);
       sessionStorage.setItem("activeTab", "home");
       navigate("/");
@@ -61,9 +60,9 @@ const LoginForm = () => {
     <div className="w-11/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
+        className="flex flex-col w-full items-center pt-1 pb-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
       >
-        <div className="text-center my-4 text-4xl">
+        <div className="text-center my-auto text-4xl">
           <p className="mix-blend-hard-light">Login</p>
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
@@ -81,7 +80,6 @@ const LoginForm = () => {
             id="email"
             onChange={(e) => {
               setInputEmail(e.target.value);
-              console.log(inputEmail);
             }}
             placeholder="Your email"
             value={inputEmail}
@@ -106,7 +104,6 @@ const LoginForm = () => {
             type="password"
             onChange={(e) => {
               setInputPassword(e.target.value);
-              console.warn("password received");
             }}
             placeholder="Your password"
             value={inputPassword}
@@ -116,12 +113,15 @@ const LoginForm = () => {
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
+          <div className="w-full flex">
+            <div>&nbsp;</div>
+          </div>
           {isLoading ? (
             <button
               disabled
               id="submit"
               type="submit"
-              className="w-full transform transition-all duration-300 ease-in-out bg-gray-200 text-zinc-950/90 border-2 border-transparent mix-blend-hard-light py-2 mt-[30px] rounded-md"
+              className="w-full transform transition-all duration-300 ease-in-out bg-gray-200 text-zinc-950/90 border-2 border-transparent mix-blend-hard-light py-2 rounded-md"
             >
               Loading...
             </button>
@@ -129,7 +129,7 @@ const LoginForm = () => {
             <button
               id="submit"
               type="submit"
-              className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-[30px] rounded-md"
+              className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 rounded-md"
             >
               Login
             </button>

@@ -17,7 +17,13 @@ const Sidebar = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    setActiveFilter(e.target.textContent);
+    let val;
+    if (e.target.textContent === "not set") {
+      val = "";
+    } else {
+      val = e.target.textContent;
+    }
+    setActiveFilter(val);
     setSideToggle(false);
   };
 
@@ -56,7 +62,7 @@ const Sidebar = () => {
                     "bg-zinc-950/90 border-transparent text-gray-200 hover:cursor-default"
                   }`}
                 >
-                  <Link>{tag}</Link>
+                  <Link>{tag === "" ? "not set" : tag}</Link>
                 </li>
               );
             })}

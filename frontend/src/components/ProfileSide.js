@@ -7,7 +7,6 @@ const ProfileSide = (props) => {
   useEffect(() => {
     getAuth().then((response) => {
       setUserData(response.data);
-      console.log(userData);
     });
     props.setUpdate(false);
   }, [props.update, props]);
@@ -34,6 +33,11 @@ const ProfileSide = (props) => {
             <img
               className="w-full"
               src={`https://picsum.photos/id/${230 + userData.user.id}/300`}
+              onError={(e) =>
+                (e.target.src = `https://picsum.photos/id/${
+                  230 + userData.user.id + 100
+                }/300`)
+              }
               alt="profile"
             />
           </div>

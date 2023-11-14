@@ -9,6 +9,7 @@ const RegisterForm = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [inputConfirmPassword, setInputConfirmPassword] = useState("");
+  const [inputRole, setInputRole] = useState("");
   const [errFirst, setErrFirst] = useState("");
   const [errLast, setErrLast] = useState("");
   const [errEmail, setErrEmail] = useState("");
@@ -26,7 +27,8 @@ const RegisterForm = () => {
       inputLast.length === 0 ||
       inputEmail.length === 0 ||
       inputPassword.length === 0 ||
-      inputConfirmPassword.length === 0
+      inputConfirmPassword.length === 0 ||
+      inputRole === ""
     ) {
       setDisabled(true);
     }
@@ -41,6 +43,7 @@ const RegisterForm = () => {
     inputEmail,
     inputPassword,
     inputConfirmPassword,
+    inputRole,
   ]);
 
   const validate = (val, field) => {
@@ -84,7 +87,7 @@ const RegisterForm = () => {
       email: inputEmail,
       password: inputPassword,
       confPassword: inputConfirmPassword,
-      role: "learner",
+      role: inputRole,
     });
     navigate("/sign");
     signIn();
@@ -99,14 +102,15 @@ const RegisterForm = () => {
     setInputEmail("");
     setInputPassword("");
     setInputConfirmPassword("");
+    setInputRole("");
   };
   return (
     <div className="w-11/12 md:w-8/12 lg:w-7/12 xl:w-1/2 m-auto h-screen flex flex-col items-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col w-full items-center pt-2 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
+        className="flex flex-col w-full items-center pb-2 pt-1 px-4 xl:text-xl lg:text-xl md:text-xl text-sm font-exo text-green-500 font-bold my-auto"
       >
-        <div className="text-center my-4 text-4xl">
+        <div className="text-center my-auto text-4xl">
           <p className="mix-blend-hard-light">Register</p>
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
@@ -264,11 +268,35 @@ const RegisterForm = () => {
           />
         </div>
         <div className="w-[calc(83.333333%+1rem)] flex flex-col">
+          <div className="w-full flex">
+            <div>&nbsp;</div>
+          </div>
+          <select
+            id="registrole"
+            type="select"
+            onChange={(e) => {
+              setInputRole(e.target.value);
+              setDisabled(false);
+            }}
+            value={inputRole}
+            className={`text-zinc-950 font-light border-2 bg-gray-300 focus:bg-gray-100 w-full mix-blend-lighten py-2 px-3 rounded-md`}
+          >
+            <option value="" disabled>
+              Role
+            </option>
+            <option value="learner">Learner</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+        <div className="w-[calc(83.333333%+1rem)] flex flex-col">
+          <div className="w-full flex">
+            <div>&nbsp;</div>
+          </div>
           <button
             disabled={disabled}
             id="register"
             type="submit"
-            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 mt-3 disabled:bg-gray-400 disabled:text-zinc-950/90 disabled:hover:cursor-not-allowed disabled:hover:border-transparent rounded-md"
+            className="w-full transform transition-all duration-300 ease-in-out bg-green-500 text-gray-200 hover:bg-gray-200 hover:text-zinc-950/90 border-2 border-transparent hover:border-zinc-950/90 mix-blend-hard-light py-2 disabled:bg-gray-400 disabled:text-zinc-950/90 disabled:hover:cursor-not-allowed disabled:hover:border-transparent rounded-md"
           >
             Register
           </button>
@@ -288,6 +316,7 @@ const RegisterForm = () => {
               setInputEmail("");
               setInputPassword("");
               setInputConfirmPassword("");
+              setInputRole("");
             }}
             className="hover:text-green-500"
           >

@@ -19,10 +19,7 @@ const NewPost = (props) => {
     } else {
       setDisable(false);
     }
-    console.log(inputTitle);
-    console.log(inputContent);
-    console.log(inputTags);
-  }, [inputTitle, inputContent, inputTags]);
+  }, [inputTitle, inputContent]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

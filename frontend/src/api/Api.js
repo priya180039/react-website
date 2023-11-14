@@ -18,6 +18,24 @@ export const getThreadsByUser = async () => {
   }
 };
 
+export const getRepliesByUser = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/user-replies/");
+    return response;
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export const getReplies = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/replies");
+    return response;
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 export const getAuth = async () => {
   try {
     const response = await axios.get("http://localhost:5000/login");
