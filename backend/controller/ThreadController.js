@@ -37,14 +37,17 @@ export const getThreadById = async (req, res) => {
         "content",
         "tags",
         "solved",
+        "createdAt",
       ],
       include: [
         {
           model: User,
           attributes: [
             "id",
+            "uuid",
             [Sequelize.literal('CONCAT(firstName, " ", lastName)'), "name"],
             "email",
+            "role",
           ],
         },
       ],

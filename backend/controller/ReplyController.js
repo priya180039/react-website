@@ -61,6 +61,16 @@ export const getRepliesByThread = async (req, res) => {
   try {
     const thread = await Thread.findOne({
       attributes: ["id", "uuid", "title", "content"],
+      include: [
+        {
+          model: User,
+          attributes: [
+            "id",
+            "uuid",
+            [Sequelize.literal('CONCAT(firstName, " ", lastName)'), "name"],
+          ],
+        },
+      ],
       where: {
         uuid: req.params.id,
       },
@@ -68,6 +78,17 @@ export const getRepliesByThread = async (req, res) => {
     if (!thread) return res.status(404).json({ msg: "Thread tidak ada" });
     const response = await Reply.findAll({
       attributes: ["id", "uuid", "userId", "threadId", "reply"],
+      include: [
+        {
+          model: User,
+          attributes: [
+            "id",
+            "uuid",
+            [Sequelize.literal('CONCAT(firstName, " ", lastName)'), "name"],
+            "role",
+          ],
+        },
+      ],
       where: {
         threadId: thread.id,
       },

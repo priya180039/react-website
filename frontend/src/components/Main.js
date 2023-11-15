@@ -58,7 +58,13 @@ const Main = (props) => {
                       {thread.user.role}
                     </p>
                   </div>
-                  <div className="w-fit rounded-md px-2 mb-3 bg-gray-300">
+                  <div
+                    className={`w-fit text-gray-200 rounded-md px-2 mb-3 ${
+                      thread.user.role === "expert"
+                        ? "bg-zinc-950/90"
+                        : "bg-sky-500"
+                    }`}
+                  >
                     <p className="shadow-md">{thread.user.name}</p>
                   </div>
                 </div>

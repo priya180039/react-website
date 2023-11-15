@@ -12,7 +12,7 @@ import { verifyUser, expertOnly } from "../middleware/AuthUser.js";
 const router = express.Router();
 
 router.get("/replies", verifyUser, getReplies);
-router.get("/replies/:id", verifyUser, expertOnly, getRepliesByThread);
+router.get("/replies/:id", verifyUser, getRepliesByThread);
 router.get("/user-replies", verifyUser, expertOnly, getRepliesByUser);
 router.post("/replies", verifyUser, expertOnly, createReply);
 router.patch("/replies/:id", verifyUser, expertOnly, updateReply);

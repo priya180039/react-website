@@ -47,7 +47,7 @@ const DashboardTable = (props) => {
         }`}
       >
         <div
-          className={`w-full md:w-full lg:w-full xl:w-full border-2 rounded-md text-sm md:text-base lg:text-base xl:text-base border-zinc-950/90 ${
+          className={`md:w-full lg:w-full xl:w-full border-2 rounded-md text-sm md:text-base lg:text-base xl:text-base border-zinc-950/90 ${
             showThreads && "w-[150%]"
           }`}
         >
