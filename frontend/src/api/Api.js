@@ -96,6 +96,30 @@ export const createPost = async (thread) => {
   }
 };
 
+export const updatePost = async (uuid, thread) => {
+  try {
+    console.log(thread);
+    const response = await axios.patch(
+      `http://localhost:5000/threads/${uuid}`,
+      thread
+    );
+    return response;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export const deletePost = async (uuid) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:5000/threads/${uuid}`
+    );
+    return response;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 export const addReply = async (reply) => {
   try {
     const response = await axios.post("http://localhost:5000/replies", reply);

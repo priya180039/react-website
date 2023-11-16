@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   addReply,
+  deletePost,
   deleteReply,
   editReply,
   getAuth,
   getRepliesByThread,
   getThreadById,
+  updatePost,
 } from "../api/Api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -24,6 +26,8 @@ const ThreadDetail = () => {
   const [editPost, setEditPost] = useState(false);
   const [editReplyIndex, setEditReplyIndex] = useState(-1);
   const [showReplies, setShowReplies] = useState(false);
+  const [inputEditTitle, setInputEditTitle] = useState("");
+  const [inputEditPost, setInputEditPost] = useState("");
   const [inputEditReply, setInputEditReply] = useState("");
   const [inputAddReply, setInputAddReply] = useState("");
   const [isUpdate, setUpdated] = useState(false);
@@ -34,23 +38,25 @@ const ThreadDetail = () => {
     getAuth().then((response) => {
       setUserData(response.data);
     });
-    getThreadById(id).then((response) => {
-      const dataDate = new Date(response.data.createdAt);
-      const dd = dataDate.getDate().toString().padStart(2, "0");
-      const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
-      const yyyy = dataDate.getFullYear();
-      const hours = dataDate.getHours().toString().padStart(2, "0");
-      const minutes = dataDate.getMinutes().toString().padStart(2, "0");
-      const seconds = dataDate.getSeconds().toString().padStart(2, "0");
+    getThreadById(id)
+      .then((response) => {
+        const dataDate = new Date(response.data.createdAt);
+        const dd = dataDate.getDate().toString().padStart(2, "0");
+        const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
+        const yyyy = dataDate.getFullYear();
+        const hours = dataDate.getHours().toString().padStart(2, "0");
+        const minutes = dataDate.getMinutes().toString().padStart(2, "0");
+        const seconds = dataDate.getSeconds().toString().padStart(2, "0");
 
-      const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
-      setThread({ ...response.data, createdAt: formattedDate });
-      getRepliesByThread(response.data.uuid).then((rep) => {
-        setReplies(rep.data);
-      });
-    });
+        const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+        setThread({ ...response.data, createdAt: formattedDate });
+        getRepliesByThread(response.data.uuid).then((rep) => {
+          setReplies(rep.data);
+        });
+      })
+      .catch((err) => navigate(-1));
     setUpdated(false);
-  }, [id, isUpdate]);
+  }, [id, isUpdate, navigate]);
 
   return (
     <div className="relative w-full justify-center mx-auto md:mr-2 lg:mr-2 z-0">
@@ -63,7 +69,35 @@ const ThreadDetail = () => {
                   <p className={`rounded-lg`}>
                     {"Post created at " + thread.createdAt}
                   </p>
-                  <p>{thread.solved === "0" ? "Unsolved" : "Solved"}</p>
+                  <p
+                    onClick={() => {
+                      let solved;
+                      if (thread.solved === "0") {
+                        solved = false;
+                      } else {
+                        solved = true;
+                      }
+                      updatePost(thread.uuid, {
+                        tags: [],
+                        solved: !solved,
+                      }).then(() => setUpdated(true));
+                    }}
+                    className={`
+                  ${
+                    thread.user.uuid === userData.user.uuid
+                      ? thread.solved === "0"
+                        ? "text-red-700 hover:text-red-500 hover:cursor-pointer"
+                        : "text-green-700 hover:text-green-500 hover:cursor-pointer"
+                      : thread.solved === "0"
+                      ? "text-red-700 pointer-events-none"
+                      : "text-green-700 pointer-events-none"
+                  }
+                    `}
+                  >
+                    {thread.solved === "0"
+                      ? "Still unsolved"
+                      : "Already solved"}
+                  </p>
                 </div>
                 <div className="flex mb-4 w-[calc(100%)] border-[1px] border-zinc-950/40"></div>
                 <div className="flex mb-3 mt-2 w-full justify-between items-center">
@@ -93,23 +127,51 @@ const ThreadDetail = () => {
                   </div>
                   {thread.user.uuid === userData.user.uuid && (
                     <div className="max-w-[25%]">
-                      {console.log(thread.user.uuid, userData.user.uuid)}
                       {editPost ? (
                         <div className="text-2xl flex scale-125 justify-end">
                           <BiX
                             className="hover:cursor-pointer text-red-700 hover:text-red-500"
                             onClick={() => {
                               setEditPost(false);
+                              setInputEditTitle("");
+                              setInputEditPost("");
                             }}
                           />
-                          <BiCheck className="hover:cursor-pointer text-green-700 hover:text-green-500" />
+                          <BiCheck
+                            onClick={() => {
+                              updatePost(thread.uuid, {
+                                title: inputEditTitle,
+                                content: inputEditPost,
+                                tags: [],
+                              }).then(() => {
+                                setUpdated(true);
+                                setEditPost(false);
+                                setInputEditTitle("");
+                                setInputEditPost("");
+                              });
+                            }}
+                            className={`${
+                              !inputEditPost || !inputEditTitle
+                                ? "pointer-events-none hover:cursor-not-allowed text-gray-600"
+                                : "hover:cursor-pointer text-green-700 hover:text-green-500"
+                            }`}
+                          />
                         </div>
                       ) : (
-                        <div className="text-2xl">
+                        <div className="text-2xl flex justify-end">
+                          <BiTrash
+                            onClick={() => {
+                              setUpdated(true);
+                              deletePost(thread.uuid).then(() => navigate(-1));
+                            }}
+                            className="hover:cursor-pointer text-red-700 hover:text-red-500"
+                          />
                           <BiEdit
                             className="hover:cursor-pointer text-sky-700 hover:text-sky-500"
                             onClick={() => {
                               setEditPost(true);
+                              setInputEditTitle(thread.title);
+                              setInputEditPost(thread.content);
                             }}
                           />
                         </div>
@@ -134,14 +196,30 @@ const ThreadDetail = () => {
                       />
                     </div>
                   </div>
-                  <div className="w-[83.25%] flex flex-col justify-between">
-                    <p className="w-fit rounded-md mb-2 px-2 py-1 shadow-lg bg-gray-300">
-                      {thread.title}
-                    </p>
-                    <p className="w-full rounded-md my-2 px-2 py-1 shadow-xl bg-gray-300">
-                      {thread.content}
-                    </p>
-                  </div>
+                  {editPost ? (
+                    <div className="w-[83.25%] flex flex-col justify-between">
+                      <input
+                        onChange={(e) => setInputEditTitle(e.target.value)}
+                        value={inputEditTitle}
+                        className="w-fit rounded-md mb-2 px-2 py-1 shadow-lg border-2 border-zinc-950/90 bg-gray-200"
+                      />
+
+                      <input
+                        onChange={(e) => setInputEditPost(e.target.value)}
+                        value={inputEditPost}
+                        className="w-full rounded-md my-2 px-2 py-1 shadow-xl border-2 border-zinc-950/90 bg-gray-200"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-[83.25%] flex flex-col justify-between">
+                      <p className="w-fit rounded-md mb-2 px-2 py-1 shadow-lg bg-gray-300">
+                        {thread.title}
+                      </p>
+                      <p className="w-full rounded-md my-2 px-2 py-1 shadow-xl bg-gray-300">
+                        {thread.content}
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className="w-full mt-4 flex justify-between">
                   <div></div>
