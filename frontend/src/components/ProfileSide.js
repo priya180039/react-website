@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAuth } from "../api/Api";
 
 const ProfileSide = (props) => {
+  const [countErrorImage, setCountErrorImage] = useState(0);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -33,11 +34,16 @@ const ProfileSide = (props) => {
             <img
               className="w-full"
               src={`https://picsum.photos/id/${230 + userData.user.id}/300`}
-              onError={(e) =>
-                (e.target.src = `https://picsum.photos/id/${
-                  230 + userData.user.id + 100
-                }/300`)
-              }
+              onError={(e) => {
+                if (countErrorImage < 1) {
+                  e.target.src = `https://picsum.photos/id/${
+                    230 + userData.user.id + 100
+                  }/300`;
+                  setCountErrorImage(countErrorImage + 1);
+                } else {
+                  console.log("Network Error");
+                }
+              }}
               alt="profile"
             />
           </div>

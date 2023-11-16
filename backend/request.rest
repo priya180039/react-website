@@ -40,8 +40,8 @@ POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "email": "admin1@gmail.com",
-    "password": "admin1"
+    "email": "uveclee@gmail.com",
+    "password": "uveclee1"
 }
 
 //Auth
@@ -168,6 +168,15 @@ Content-Type: application/json
     "title": "Menambahkan fitur scoring",
     "content": "Bagaimana caranya menambahkan fitur thumbs scoring untuk suatu thread? Aku sempat memulai menambahkan fitur ini tetapi sulit untuk mengimplementasikannya. Aku berpikir untuk memberikan saja tombol counter sesuai berapa kali thread/reply tersebut disukai, tetapi cara ini memungkinkan bug/eksploitasi untuk spam like pada 1 thread yang dilakukan 1 user",
     "tags": ["fitur scoring", "web development", "frontend", "helpful"]
+}
+
+###
+PATCH http://localhost:5000/threads/9375863b-5d6a-4c9b-9b75-77f348fc826a
+Content-Type: application/json
+
+{
+    "tags": [],
+    "solved": true
 }
 
 ###

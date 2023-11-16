@@ -22,7 +22,6 @@ const Header = () => {
 
   useEffect(() => {
     setShowFilter(location.pathname === "/");
-    console.log(showFilter);
     const handleOutsideLogout = (e) => {
       if (buttonRef.current && !buttonRef.current.contains(e.target)) {
         setExpand(false);

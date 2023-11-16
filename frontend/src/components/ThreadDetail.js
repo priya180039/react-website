@@ -20,6 +20,8 @@ import {
 } from "react-icons/bi";
 
 const ThreadDetail = () => {
+  const [countErrorImageThread, setCountErrorImageThread] = useState(0);
+  const [countErrorImageReplies, setCountErrorImageReplies] = useState(0);
   const [userData, setUserData] = useState(null);
   const [thread, setThread] = useState({});
   const [replies, setReplies] = useState([]);
@@ -187,11 +189,16 @@ const ThreadDetail = () => {
                         src={`https://picsum.photos/id/${
                           230 + thread.user.id
                         }/300`}
-                        onError={(e) =>
-                          (e.target.src = `https://picsum.photos/id/${
-                            230 + thread.user.id + 100
-                          }/300`)
-                        }
+                        onError={(e) => {
+                          if (countErrorImageThread < 1) {
+                            e.target.src = `https://picsum.photos/id/${
+                              230 + thread.user.id + 100
+                            }/300`;
+                            setCountErrorImageThread(countErrorImageThread + 1);
+                          } else {
+                            console.log("Network Error");
+                          }
+                        }}
                         alt="profile"
                       />
                     </div>
@@ -251,11 +258,18 @@ const ThreadDetail = () => {
                               src={`https://picsum.photos/id/${
                                 230 + reply.user.id
                               }/300`}
-                              onError={(e) =>
-                                (e.target.src = `https://picsum.photos/id/${
-                                  230 + reply.user.id + 100
-                                }/300`)
-                              }
+                              onError={(e) => {
+                                if (countErrorImageReplies < 1) {
+                                  e.target.src = `https://picsum.photos/id/${
+                                    230 + reply.user.id + 100
+                                  }/300`;
+                                  setCountErrorImageReplies(
+                                    countErrorImageReplies + 1
+                                  );
+                                } else {
+                                  console.log("Network Error");
+                                }
+                              }}
                               alt="profile"
                             />
                           </div>

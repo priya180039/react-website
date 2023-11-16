@@ -6,6 +6,7 @@ import { BiComment } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 const Main = (props) => {
+  const [countErrorImage, setCountErrorImage] = useState(0);
   const [threads, setThreads] = useState([]);
   const [replies, setReplies] = useState([]);
   const { sideToggle } = useHeader();
@@ -76,11 +77,16 @@ const Main = (props) => {
                         src={`https://picsum.photos/id/${
                           230 + thread.user.id
                         }/300`}
-                        onError={(e) =>
-                          (e.target.src = `https://picsum.photos/id/${
-                            230 + thread.user.id + 100
-                          }/300`)
-                        }
+                        onError={(e) => {
+                          if (countErrorImage < 1) {
+                            e.target.src = `https://picsum.photos/id/${
+                              230 + thread.user.id + 100
+                            }/300`;
+                            setCountErrorImage(countErrorImage + 1);
+                          } else {
+                            console.log("Network Error");
+                          }
+                        }}
                         alt="profile"
                       />
                     </div>

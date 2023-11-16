@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAuth, getReplies, getThreadsByUser } from "../api/Api";
-import { Link } from "react-router-dom";
+import { deletePost, getAuth, getReplies, getThreadsByUser } from "../api/Api";
+import { Link, useNavigate } from "react-router-dom";
 
 const DashboardTable = (props) => {
   const [userData, setUserData] = useState(null);
@@ -8,6 +8,8 @@ const DashboardTable = (props) => {
   const [replies, setReplies] = useState([]);
   const [showThreads, setShowThreads] = useState(false);
   const [changeBtn, setChangeBtn] = useState(false);
+  const [isUpdate, setUpdated] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAuth().then((response) => {
@@ -34,7 +36,8 @@ const DashboardTable = (props) => {
     if (props.changeSection !== "thread") {
       setShowThreads(false);
     }
-  }, [props]);
+    setUpdated(false);
+  }, [props, isUpdate]);
 
   return (
     <div className="relative w-[calc(98.75%)] mx-auto md:ml-2 lg:mx-2 xl:mx-2 z-0">
@@ -48,7 +51,7 @@ const DashboardTable = (props) => {
       >
         <div
           className={`md:w-full lg:w-full xl:w-full border-2 rounded-md text-sm md:text-base lg:text-base xl:text-base border-zinc-950/90 ${
-            showThreads && "w-[150%]"
+            showThreads && "w-[180%]"
           }`}
         >
           {showThreads ? (
@@ -134,7 +137,21 @@ const DashboardTable = (props) => {
                       {thread.solved === "0" ? "Unsolved" : "Solved"}
                     </li>
                     <li className="w-[10%] max-w-[10%] text-center border-zinc-950/20 border-t-2 py-2">
-                      Action
+                      <button
+                        onClick={() => navigate(`/thread/${thread.uuid}`)}
+                        className="bg-sky-700 w-3/4 mb-2 text-gray-200 hover:bg-sky-500 rounded-md"
+                      >
+                        To Post
+                      </button>
+                      <button
+                        onClick={() => {
+                          setUpdated(true);
+                          deletePost(thread.uuid);
+                        }}
+                        className="bg-red-700 w-3/4 text-gray-200 hover:bg-red-500 rounded-md"
+                      >
+                        Delete
+                      </button>
                     </li>
                   </ul>
                 </div>
