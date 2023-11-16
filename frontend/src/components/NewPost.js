@@ -10,13 +10,23 @@ const NewPost = (props) => {
   const [inputTags, setInputTags] = useState([]);
   const [inputTitle, setInputTitle] = useState("");
   const [inputContent, setInputContent] = useState("");
+  const [errTitle, setErrTitle] = useState("");
 
   const { sideToggle } = useHeader();
 
   useEffect(() => {
     if (!inputTitle || !inputContent) {
+      if (inputTitle.length > 50) {
+        setErrTitle("Maximum title 50 characters long");
+      } else {
+        setErrTitle("");
+      }
       setDisable(true);
+    } else if (inputTitle.length > 50) {
+      setDisable(true);
+      setErrTitle("Maximum title 50 characters long");
     } else {
+      setErrTitle("");
       setDisable(false);
     }
   }, [inputTitle, inputContent]);
@@ -99,6 +109,7 @@ const NewPost = (props) => {
             setInputTitle("");
             setInputContent("");
             setTagRef("");
+            setErrTitle("");
             setInputTags([]);
           }}
           className={`text-gray-200 text-center mb-2 ${
@@ -118,6 +129,7 @@ const NewPost = (props) => {
         >
           Create Post
         </button>
+        <p className="text-red-500 w-full text-lg">{errTitle}</p>
       </form>
     </div>
   );

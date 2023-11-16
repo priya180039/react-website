@@ -65,7 +65,6 @@ export const getAuth = async () => {
 
 export const updateUser = async (uuid, user) => {
   try {
-    console.log(uuid, user);
     const response = await axios.patch(
       `http://localhost:5000/users/${uuid}`,
       user
@@ -78,7 +77,6 @@ export const updateUser = async (uuid, user) => {
 
 export const registerUser = async (user) => {
   try {
-    console.log(user);
     const response = await axios.post("http://localhost:5000/users", user);
     return response;
   } catch (err) {
@@ -88,7 +86,6 @@ export const registerUser = async (user) => {
 
 export const createPost = async (thread) => {
   try {
-    console.log(thread);
     const response = await axios.post("http://localhost:5000/threads", thread);
     return response;
   } catch (err) {
@@ -98,7 +95,6 @@ export const createPost = async (thread) => {
 
 export const updatePost = async (uuid, thread) => {
   try {
-    console.log(thread);
     const response = await axios.patch(
       `http://localhost:5000/threads/${uuid}`,
       thread

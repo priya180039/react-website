@@ -77,7 +77,7 @@ Content-Type: application/json
 
 {
     "userId": "",
-    "title": "Thread tentang Web Development",
+    "title": "Thread tentang Web Development Development Development",
     "content": "Apakah untuk memulai menjadi sebagai seorang web developer harus dimulai dari fullstack, lalu setelah itu memutuskan ingin melanjutkan untuk memperdalam di frontend atau backend?",
     "tags": ["Reactjs", "web development", "frontend"]
 }
