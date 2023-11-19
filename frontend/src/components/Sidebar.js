@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getThreads().then((response) => {
-      setThreads(response.data);
+      if (response) setThreads(response.data);
     });
   }, [activeFilter]);
 

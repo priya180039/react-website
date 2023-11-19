@@ -21,11 +21,13 @@ const ProfileForm = (props) => {
 
   useEffect(() => {
     getAuth().then((response) => {
-      setUserData(response.data);
-      if (!editFirst && !editLast && !editEmail) {
-        setInputFirst(response.data.user.firstName);
-        setInputLast(response.data.user.lastName);
-        setInputEmail(response.data.user.email);
+      if (response) {
+        setUserData(response.data);
+        if (!editFirst && !editLast && !editEmail) {
+          setInputFirst(response.data.user.firstName);
+          setInputLast(response.data.user.lastName);
+          setInputEmail(response.data.user.email);
+        }
       }
     });
   }, [editFirst, editLast, editEmail, editPassword]);

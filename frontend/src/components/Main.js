@@ -15,10 +15,10 @@ const Main = (props) => {
 
   useEffect(() => {
     getThreads().then((response) => {
-      setThreads(response.data);
+      if (response) setThreads(response.data);
     });
     getReplies().then((response) => {
-      setReplies(response.data);
+      if (response) setReplies(response.data);
     });
     props.setUpdated(false);
   }, [props.updated, props]);

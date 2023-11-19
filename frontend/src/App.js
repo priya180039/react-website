@@ -1,6 +1,6 @@
 import Landing from "./pages/Landing";
 // import Login from "./components/Login";
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
 import "./input.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,6 +14,10 @@ import { HeaderProvider } from "./features/HeaderContext";
 import Thread from "./pages/Thread";
 
 function App() {
+  useEffect(() => {
+    const title = document.querySelector("title");
+    title.textContent = "Fortech | Discussion Forum";
+  }, []);
   return (
     <SignProvider>
       <HeaderProvider>

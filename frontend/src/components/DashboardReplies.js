@@ -11,19 +11,21 @@ const DashboardReplies = (props) => {
 
   useEffect(() => {
     getRepliesByUser().then((res) => {
-      const format = res.data.map((reply) => {
-        const dataDate = new Date(reply.createdAt);
-        const dd = dataDate.getDate().toString().padStart(2, "0");
-        const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
-        const yyyy = dataDate.getFullYear();
-        const hours = dataDate.getHours().toString().padStart(2, "0");
-        const minutes = dataDate.getMinutes().toString().padStart(2, "0");
-        const seconds = dataDate.getSeconds().toString().padStart(2, "0");
+      if (res) {
+        const format = res.data.map((reply) => {
+          const dataDate = new Date(reply.createdAt);
+          const dd = dataDate.getDate().toString().padStart(2, "0");
+          const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
+          const yyyy = dataDate.getFullYear();
+          const hours = dataDate.getHours().toString().padStart(2, "0");
+          const minutes = dataDate.getMinutes().toString().padStart(2, "0");
+          const seconds = dataDate.getSeconds().toString().padStart(2, "0");
 
-        const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
-        return { ...reply, createdAt: formattedDate };
-      });
-      setReplies(format);
+          const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+          return { ...reply, createdAt: formattedDate };
+        });
+        setReplies(format);
+      }
     });
     if (props.changeSection !== "reply") {
       setShowReplies(false);

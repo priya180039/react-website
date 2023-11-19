@@ -7,7 +7,7 @@ const ProfileSide = (props) => {
 
   useEffect(() => {
     getAuth().then((response) => {
-      setUserData(response.data);
+      if (response) setUserData(response.data);
     });
     props.setUpdate(false);
   }, [props.update, props]);

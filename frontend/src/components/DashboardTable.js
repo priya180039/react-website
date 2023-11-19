@@ -13,25 +13,27 @@ const DashboardTable = (props) => {
 
   useEffect(() => {
     getAuth().then((response) => {
-      setUserData(response.data);
+      if (response) setUserData(response.data);
     });
     getThreadsByUser().then((res) => {
-      const format = res.data.map((thread) => {
-        const dataDate = new Date(thread.createdAt);
-        const dd = dataDate.getDate().toString().padStart(2, "0");
-        const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
-        const yyyy = dataDate.getFullYear();
-        const hours = dataDate.getHours().toString().padStart(2, "0");
-        const minutes = dataDate.getMinutes().toString().padStart(2, "0");
-        const seconds = dataDate.getSeconds().toString().padStart(2, "0");
+      if (res) {
+        const format = res.data.map((thread) => {
+          const dataDate = new Date(thread.createdAt);
+          const dd = dataDate.getDate().toString().padStart(2, "0");
+          const mm = (dataDate.getMonth() + 1).toString().padStart(2, "0");
+          const yyyy = dataDate.getFullYear();
+          const hours = dataDate.getHours().toString().padStart(2, "0");
+          const minutes = dataDate.getMinutes().toString().padStart(2, "0");
+          const seconds = dataDate.getSeconds().toString().padStart(2, "0");
 
-        const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
-        return { ...thread, createdAt: formattedDate };
-      });
-      setThreads(format);
+          const formattedDate = `${dd}-${mm}-${yyyy} ${hours}:${minutes}:${seconds}`;
+          return { ...thread, createdAt: formattedDate };
+        });
+        setThreads(format);
+      }
     });
     getReplies().then((response) => {
-      setReplies(response.data);
+      if (response) setReplies(response.data);
     });
     if (props.changeSection !== "thread") {
       setShowThreads(false);
@@ -51,7 +53,7 @@ const DashboardTable = (props) => {
       >
         <div
           className={`md:w-full lg:w-full xl:w-full border-2 rounded-md text-sm md:text-base lg:text-base xl:text-base border-zinc-950/90 ${
-            showThreads && "w-[180%]"
+            showThreads && "w-[200%]"
           }`}
         >
           {showThreads ? (
